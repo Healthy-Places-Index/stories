@@ -1,10 +1,10 @@
-require('dotenv-safe').config();
+require('dotenv').config();
 const { Keystone } = require('@keystonejs/keystone');
 const { PasswordAuthStrategy } = require('@keystonejs/auth-password');
 const { GraphQLApp } = require('@keystonejs/app-graphql');
 const { AdminUIApp } = require('@keystonejs/app-admin-ui');
 const { NextApp } = require('@keystonejs/app-next');
-const { MongooseAdapter: Adapter } = require('@keystonejs/adapter-mongoose');
+const { PrismaAdapter } = require('@keystonejs/adapter-prisma');
 const expressSession = require('express-session');
 const MongoStore = require('connect-mongo')(expressSession);
 const initialiseData = require('./initial-data');
@@ -26,13 +26,13 @@ const BasemapSchema = require('./lists/Basemap');
 const AnnotationSchema = require('./lists/Annotation');
 
 const PROJECT_NAME = 'imagineRio Narratives';
-const adapterConfig = { mongoUri: `${process.env.MONGO_URI}${process.env.MONGO_DB}` };
+const adapterConfig = { url: 'postgres://davidheyman@localhost/hpi-stories' };
 
 const keystone = new Keystone({
-  adapter: new Adapter(adapterConfig),
+  adapter: new PrismaAdapter(adapterConfig),
   onConnect: process.env.CREATE_TABLES !== 'true' && initialiseData,
   cookieSecret: process.env.COOKIE_SECRET,
-  sessionStore: new MongoStore({ url: `${process.env.MONGO_URI}${process.env.MONGO_DB}` }),
+  // sessionStore: new MongoStore({ url: `${process.env.MONGO_URI}${process.env.MONGO_DB}` }),
 });
 
 keystone.createList('User', UserSchema);

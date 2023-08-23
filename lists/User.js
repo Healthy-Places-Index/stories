@@ -143,19 +143,19 @@ module.exports = {
       },
     },
   },
-  hooks: {
-    afterChange: async ({ operation, updatedItem, context }) => {
-      if (operation === 'create') {
-        const {
-          req: { protocol, hostname },
-        } = context;
-        sendEmail({
-          to: updatedItem.email,
-          key: updatedItem.verifyId,
-          host: `${protocol}://${hostname}`,
-          lang: updatedItem.language,
-        });
-      }
-    },
-  },
+  // hooks: {
+  //   afterChange: async ({ operation, updatedItem, context }) => {
+  //     if (operation === 'create') {
+  //       const {
+  //         req: { protocol, hostname },
+  //       } = context;
+  //       sendEmail({
+  //         to: updatedItem.email,
+  //         key: updatedItem.verifyId,
+  //         host: `${protocol}://${hostname}`,
+  //         lang: updatedItem.language,
+  //       });
+  //     }
+  //   },
+  // },
 };

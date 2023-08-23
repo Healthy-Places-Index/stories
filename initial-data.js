@@ -203,7 +203,7 @@ const migrateImages = async (keystone, context) => {
 module.exports = async keystone => {
   const context = keystone.createContext({ skipAccessControl: true });
   await addInitialUser(keystone, context);
-  await populateLayers(keystone, context);
-  await populateBasemaps(keystone, context);
-  await migrateImages(keystone, context);
+  // await populateLayers(keystone, context);
+  // await populateBasemaps(keystone, context);
+  // await migrateImages(keystone, context);
 };

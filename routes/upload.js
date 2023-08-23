@@ -1,5 +1,5 @@
 /* eslint-disable class-methods-use-this */
-require('dotenv-safe').config();
+require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
 const aws = require('aws-sdk');
