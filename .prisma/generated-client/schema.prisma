@@ -1,0 +1,112 @@
+datasource postgresql {
+  url      = env("DATABASE_URL")
+  provider = "postgresql"
+}
+
+generator client {
+  provider        = "prisma-client-js"
+  output          = "generated-client"
+  previewFeatures = ["nativeTypes"]
+}
+
+model User {
+  id              Int       @id @default(autoincrement())
+  name            String?
+  email           String?   @unique
+  institution     String?
+  language        String?
+  verified        Boolean?
+  verifyId        String?
+  resetId         String?
+  isAdmin         Boolean?
+  password        String?
+  termsAccepted   Boolean?
+  privacyAccepted Boolean?
+  projects        Project[] @relation("Projectuser")
+}
+
+model Slide {
+  id              Int          @id @default(autoincrement())
+  title           String?
+  description     String?
+  order           Int?
+  size            String?
+  longitude       Float?
+  latitude        Float?
+  zoom            Float?
+  bearing         Float?
+  pitch           Float?
+  selectedFeature String?
+  media           String?
+  imageTitle      String?
+  source          String?
+  url             String?
+  indicator       Indicator?   @relation("Slideindicator", fields: [indicatorId], references: [id])
+  indicatorId     Int?         @map("indicator")
+  geography       Geography?   @relation("Slidegeography", fields: [geographyId], references: [id])
+  geographyId     Int?         @map("geography")
+  image           Image?       @relation("Imageslide")
+  project         Project?     @relation("Slideproject", fields: [projectId], references: [id])
+  projectId       Int?         @map("project")
+  annotations     Annotation[] @relation("Annotationslide")
+}
+
+model Image {
+  id      Int     @id @default(autoincrement())
+  title   String?
+  creator String?
+  source  String?
+  date    String?
+  url     String?
+  slide   Slide?  @relation("Imageslide", fields: [slideId], references: [id])
+  slideId Int?    @map("slide")
+}
+
+model Project {
+  id               Int       @id @default(autoincrement())
+  title            String?
+  description      String?
+  category         String?
+  imageTitle       String?
+  source           String?
+  url              String?
+  published        Boolean?
+  gallery          Boolean?
+  updatedAt_utc    DateTime?
+  updatedAt_offset String?
+  createdAt_utc    DateTime?
+  createdAt_offset String?
+  tags             Tag[]     @relation("Project_tags_many", references: [id])
+  slides           Slide[]   @relation("Slideproject")
+  user             User?     @relation("Projectuser", fields: [userId], references: [id])
+  userId           Int?      @map("user")
+}
+
+model Tag {
+  id                Int       @id @default(autoincrement())
+  name              String?   @unique
+  from_Project_tags Project[] @relation("Project_tags_many", references: [id])
+}
+
+model Geography {
+  id                   Int     @id @default(autoincrement())
+  layer                String?
+  title                String?
+  ordering             Int?
+  from_Slide_geography Slide[] @relation("Slidegeography")
+}
+
+model Indicator {
+  id                   Int     @id @default(autoincrement())
+  varname              String?
+  title                String?
+  domain               String?
+  from_Slide_indicator Slide[] @relation("Slideindicator")
+}
+
+model Annotation {
+  id      Int     @id @default(autoincrement())
+  feature String?
+  slide   Slide?  @relation("Annotationslide", fields: [slideId], references: [id])
+  slideId Int?    @map("slide")
+}
