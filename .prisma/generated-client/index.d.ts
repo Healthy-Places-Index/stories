@@ -114,6 +114,9 @@ export type Indicator = {
   varname: string | null
   title: string | null
   domain: string | null
+  year: number | null
+  source: string | null
+  url: string | null
 }
 
 /**
@@ -4727,10 +4730,12 @@ export namespace Prisma {
     layer?: boolean
     title?: boolean
     ordering?: boolean
+    from_Indicator_geographies?: boolean | IndicatorFindManyArgs
     from_Slide_geography?: boolean | SlideFindManyArgs
   }
 
   export type GeographyInclude = {
+    from_Indicator_geographies?: boolean | IndicatorFindManyArgs
     from_Slide_geography?: boolean | SlideFindManyArgs
   }
 
@@ -4745,14 +4750,18 @@ export namespace Prisma {
     ?'include' extends U
     ? Geography  & {
     [P in TrueKeys<S['include']>]: 
-          P extends 'from_Slide_geography'
+          P extends 'from_Indicator_geographies'
+        ? Array < IndicatorGetPayload<S['include'][P]>>  :
+        P extends 'from_Slide_geography'
         ? Array < SlideGetPayload<S['include'][P]>>  : never
   } 
     : 'select' extends U
     ? {
     [P in TrueKeys<S['select']>]: P extends keyof Geography ?Geography [P]
   : 
-          P extends 'from_Slide_geography'
+          P extends 'from_Indicator_geographies'
+        ? Array < IndicatorGetPayload<S['select'][P]>>  :
+        P extends 'from_Slide_geography'
         ? Array < SlideGetPayload<S['select'][P]>>  : never
   } 
     : Geography
@@ -4990,6 +4999,8 @@ export namespace Prisma {
     private _requestPromise?;
     constructor(_dmmf: runtime.DMMFClass, _fetcher: PrismaClientFetcher, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
     readonly [Symbol.toStringTag]: 'PrismaClientPromise';
+
+    from_Indicator_geographies<T extends IndicatorFindManyArgs = {}>(args?: Subset<T, IndicatorFindManyArgs>): CheckSelect<T, Promise<Array<Indicator>>, Promise<Array<IndicatorGetPayload<T>>>>;
 
     from_Slide_geography<T extends SlideFindManyArgs = {}>(args?: Subset<T, SlideFindManyArgs>): CheckSelect<T, Promise<Array<Slide>>, Promise<Array<SlideGetPayload<T>>>>;
 
@@ -5274,10 +5285,12 @@ export namespace Prisma {
 
   export type IndicatorAvgAggregateOutputType = {
     id: number
+    year: number | null
   }
 
   export type IndicatorSumAggregateOutputType = {
     id: number
+    year: number | null
   }
 
   export type IndicatorMinAggregateOutputType = {
@@ -5285,6 +5298,9 @@ export namespace Prisma {
     varname: string | null
     title: string | null
     domain: string | null
+    year: number | null
+    source: string | null
+    url: string | null
   }
 
   export type IndicatorMaxAggregateOutputType = {
@@ -5292,6 +5308,9 @@ export namespace Prisma {
     varname: string | null
     title: string | null
     domain: string | null
+    year: number | null
+    source: string | null
+    url: string | null
   }
 
   export type IndicatorCountAggregateOutputType = {
@@ -5299,16 +5318,21 @@ export namespace Prisma {
     varname: number | null
     title: number | null
     domain: number | null
+    year: number | null
+    source: number | null
+    url: number | null
     _all: number
   }
 
 
   export type IndicatorAvgAggregateInputType = {
     id?: true
+    year?: true
   }
 
   export type IndicatorSumAggregateInputType = {
     id?: true
+    year?: true
   }
 
   export type IndicatorMinAggregateInputType = {
@@ -5316,6 +5340,9 @@ export namespace Prisma {
     varname?: true
     title?: true
     domain?: true
+    year?: true
+    source?: true
+    url?: true
   }
 
   export type IndicatorMaxAggregateInputType = {
@@ -5323,6 +5350,9 @@ export namespace Prisma {
     varname?: true
     title?: true
     domain?: true
+    year?: true
+    source?: true
+    url?: true
   }
 
   export type IndicatorCountAggregateInputType = {
@@ -5330,6 +5360,9 @@ export namespace Prisma {
     varname?: true
     title?: true
     domain?: true
+    year?: true
+    source?: true
+    url?: true
     _all?: true
   }
 
@@ -5409,10 +5442,15 @@ export namespace Prisma {
     varname?: boolean
     title?: boolean
     domain?: boolean
+    year?: boolean
+    source?: boolean
+    url?: boolean
+    geographies?: boolean | GeographyFindManyArgs
     from_Slide_indicator?: boolean | SlideFindManyArgs
   }
 
   export type IndicatorInclude = {
+    geographies?: boolean | GeographyFindManyArgs
     from_Slide_indicator?: boolean | SlideFindManyArgs
   }
 
@@ -5427,14 +5465,18 @@ export namespace Prisma {
     ?'include' extends U
     ? Indicator  & {
     [P in TrueKeys<S['include']>]: 
-          P extends 'from_Slide_indicator'
+          P extends 'geographies'
+        ? Array < GeographyGetPayload<S['include'][P]>>  :
+        P extends 'from_Slide_indicator'
         ? Array < SlideGetPayload<S['include'][P]>>  : never
   } 
     : 'select' extends U
     ? {
     [P in TrueKeys<S['select']>]: P extends keyof Indicator ?Indicator [P]
   : 
-          P extends 'from_Slide_indicator'
+          P extends 'geographies'
+        ? Array < GeographyGetPayload<S['select'][P]>>  :
+        P extends 'from_Slide_indicator'
         ? Array < SlideGetPayload<S['select'][P]>>  : never
   } 
     : Indicator
@@ -5672,6 +5714,8 @@ export namespace Prisma {
     private _requestPromise?;
     constructor(_dmmf: runtime.DMMFClass, _fetcher: PrismaClientFetcher, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
     readonly [Symbol.toStringTag]: 'PrismaClientPromise';
+
+    geographies<T extends GeographyFindManyArgs = {}>(args?: Subset<T, GeographyFindManyArgs>): CheckSelect<T, Promise<Array<Geography>>, Promise<Array<GeographyGetPayload<T>>>>;
 
     from_Slide_indicator<T extends SlideFindManyArgs = {}>(args?: Subset<T, SlideFindManyArgs>): CheckSelect<T, Promise<Array<Slide>>, Promise<Array<SlideGetPayload<T>>>>;
 
@@ -6724,7 +6768,10 @@ export namespace Prisma {
     id: 'id',
     varname: 'varname',
     title: 'title',
-    domain: 'domain'
+    domain: 'domain',
+    year: 'year',
+    source: 'source',
+    url: 'url'
   };
 
   export type IndicatorScalarFieldEnum = (typeof IndicatorScalarFieldEnum)[keyof typeof IndicatorScalarFieldEnum]
@@ -6957,6 +7004,7 @@ export namespace Prisma {
     layer?: StringNullableFilter | string | null
     title?: StringNullableFilter | string | null
     ordering?: IntNullableFilter | number | null
+    from_Indicator_geographies?: IndicatorListRelationFilter
     from_Slide_geography?: SlideListRelationFilter
   }
 
@@ -6979,6 +7027,10 @@ export namespace Prisma {
     varname?: StringNullableFilter | string | null
     title?: StringNullableFilter | string | null
     domain?: StringNullableFilter | string | null
+    year?: IntNullableFilter | number | null
+    source?: StringNullableFilter | string | null
+    url?: StringNullableFilter | string | null
+    geographies?: GeographyListRelationFilter
     from_Slide_indicator?: SlideListRelationFilter
   }
 
@@ -6987,6 +7039,9 @@ export namespace Prisma {
     varname?: SortOrder
     title?: SortOrder
     domain?: SortOrder
+    year?: SortOrder
+    source?: SortOrder
+    url?: SortOrder
   }
 
   export type IndicatorWhereUniqueInput = {
@@ -7426,6 +7481,7 @@ export namespace Prisma {
     layer?: string | null
     title?: string | null
     ordering?: number | null
+    from_Indicator_geographies?: IndicatorCreateNestedManyWithoutGeographiesInput
     from_Slide_geography?: SlideCreateNestedManyWithoutGeographyInput
   }
 
@@ -7441,6 +7497,7 @@ export namespace Prisma {
     layer?: NullableStringFieldUpdateOperationsInput | string | null
     title?: NullableStringFieldUpdateOperationsInput | string | null
     ordering?: NullableIntFieldUpdateOperationsInput | number | null
+    from_Indicator_geographies?: IndicatorUpdateManyWithoutGeographiesInput
     from_Slide_geography?: SlideUpdateManyWithoutGeographyInput
   }
 
@@ -7469,6 +7526,10 @@ export namespace Prisma {
     varname?: string | null
     title?: string | null
     domain?: string | null
+    year?: number | null
+    source?: string | null
+    url?: string | null
+    geographies?: GeographyCreateNestedManyWithoutFrom_Indicator_geographiesInput
     from_Slide_indicator?: SlideCreateNestedManyWithoutIndicatorInput
   }
 
@@ -7477,6 +7538,9 @@ export namespace Prisma {
     varname?: string | null
     title?: string | null
     domain?: string | null
+    year?: number | null
+    source?: string | null
+    url?: string | null
     from_Slide_indicator?: SlideUncheckedCreateNestedManyWithoutIndicatorInput
   }
 
@@ -7484,6 +7548,10 @@ export namespace Prisma {
     varname?: NullableStringFieldUpdateOperationsInput | string | null
     title?: NullableStringFieldUpdateOperationsInput | string | null
     domain?: NullableStringFieldUpdateOperationsInput | string | null
+    year?: NullableIntFieldUpdateOperationsInput | number | null
+    source?: NullableStringFieldUpdateOperationsInput | string | null
+    url?: NullableStringFieldUpdateOperationsInput | string | null
+    geographies?: GeographyUpdateManyWithoutFrom_Indicator_geographiesInput
     from_Slide_indicator?: SlideUpdateManyWithoutIndicatorInput
   }
 
@@ -7492,6 +7560,9 @@ export namespace Prisma {
     varname?: NullableStringFieldUpdateOperationsInput | string | null
     title?: NullableStringFieldUpdateOperationsInput | string | null
     domain?: NullableStringFieldUpdateOperationsInput | string | null
+    year?: NullableIntFieldUpdateOperationsInput | number | null
+    source?: NullableStringFieldUpdateOperationsInput | string | null
+    url?: NullableStringFieldUpdateOperationsInput | string | null
     from_Slide_indicator?: SlideUncheckedUpdateManyWithoutIndicatorInput
   }
 
@@ -7499,6 +7570,9 @@ export namespace Prisma {
     varname?: NullableStringFieldUpdateOperationsInput | string | null
     title?: NullableStringFieldUpdateOperationsInput | string | null
     domain?: NullableStringFieldUpdateOperationsInput | string | null
+    year?: NullableIntFieldUpdateOperationsInput | number | null
+    source?: NullableStringFieldUpdateOperationsInput | string | null
+    url?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type IndicatorUncheckedUpdateManyInput = {
@@ -7506,6 +7580,9 @@ export namespace Prisma {
     varname?: NullableStringFieldUpdateOperationsInput | string | null
     title?: NullableStringFieldUpdateOperationsInput | string | null
     domain?: NullableStringFieldUpdateOperationsInput | string | null
+    year?: NullableIntFieldUpdateOperationsInput | number | null
+    source?: NullableStringFieldUpdateOperationsInput | string | null
+    url?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type AnnotationCreateInput = {
@@ -7656,6 +7733,18 @@ export namespace Prisma {
   export type UserRelationFilter = {
     is?: UserWhereInput | null
     isNot?: UserWhereInput | null
+  }
+
+  export type IndicatorListRelationFilter = {
+    every?: IndicatorWhereInput
+    some?: IndicatorWhereInput
+    none?: IndicatorWhereInput
+  }
+
+  export type GeographyListRelationFilter = {
+    every?: GeographyWhereInput
+    some?: GeographyWhereInput
+    none?: GeographyWhereInput
   }
 
   export type ProjectCreateNestedManyWithoutUserInput = {
@@ -7958,6 +8047,12 @@ export namespace Prisma {
     deleteMany?: Enumerable<ProjectScalarWhereInput>
   }
 
+  export type IndicatorCreateNestedManyWithoutGeographiesInput = {
+    create?: XOR<Enumerable<IndicatorUncheckedCreateWithoutGeographiesInput>, Enumerable<IndicatorCreateWithoutGeographiesInput>>
+    connectOrCreate?: Enumerable<IndicatorCreateOrConnectWithoutgeographiesInput>
+    connect?: Enumerable<IndicatorWhereUniqueInput>
+  }
+
   export type SlideCreateNestedManyWithoutGeographyInput = {
     create?: XOR<Enumerable<SlideUncheckedCreateWithoutGeographyInput>, Enumerable<SlideCreateWithoutGeographyInput>>
     connectOrCreate?: Enumerable<SlideCreateOrConnectWithoutgeographyInput>
@@ -7968,6 +8063,19 @@ export namespace Prisma {
     create?: XOR<Enumerable<SlideUncheckedCreateWithoutGeographyInput>, Enumerable<SlideCreateWithoutGeographyInput>>
     connectOrCreate?: Enumerable<SlideCreateOrConnectWithoutgeographyInput>
     connect?: Enumerable<SlideWhereUniqueInput>
+  }
+
+  export type IndicatorUpdateManyWithoutGeographiesInput = {
+    create?: XOR<Enumerable<IndicatorUncheckedCreateWithoutGeographiesInput>, Enumerable<IndicatorCreateWithoutGeographiesInput>>
+    connectOrCreate?: Enumerable<IndicatorCreateOrConnectWithoutgeographiesInput>
+    upsert?: Enumerable<IndicatorUpsertWithWhereUniqueWithoutGeographiesInput>
+    connect?: Enumerable<IndicatorWhereUniqueInput>
+    set?: Enumerable<IndicatorWhereUniqueInput>
+    disconnect?: Enumerable<IndicatorWhereUniqueInput>
+    delete?: Enumerable<IndicatorWhereUniqueInput>
+    update?: Enumerable<IndicatorUpdateWithWhereUniqueWithoutGeographiesInput>
+    updateMany?: Enumerable<IndicatorUpdateManyWithWhereWithoutGeographiesInput>
+    deleteMany?: Enumerable<IndicatorScalarWhereInput>
   }
 
   export type SlideUpdateManyWithoutGeographyInput = {
@@ -7996,6 +8104,12 @@ export namespace Prisma {
     deleteMany?: Enumerable<SlideScalarWhereInput>
   }
 
+  export type GeographyCreateNestedManyWithoutFrom_Indicator_geographiesInput = {
+    create?: XOR<Enumerable<GeographyUncheckedCreateWithoutFrom_Indicator_geographiesInput>, Enumerable<GeographyCreateWithoutFrom_Indicator_geographiesInput>>
+    connectOrCreate?: Enumerable<GeographyCreateOrConnectWithoutfrom_Indicator_geographiesInput>
+    connect?: Enumerable<GeographyWhereUniqueInput>
+  }
+
   export type SlideCreateNestedManyWithoutIndicatorInput = {
     create?: XOR<Enumerable<SlideUncheckedCreateWithoutIndicatorInput>, Enumerable<SlideCreateWithoutIndicatorInput>>
     connectOrCreate?: Enumerable<SlideCreateOrConnectWithoutindicatorInput>
@@ -8006,6 +8120,19 @@ export namespace Prisma {
     create?: XOR<Enumerable<SlideUncheckedCreateWithoutIndicatorInput>, Enumerable<SlideCreateWithoutIndicatorInput>>
     connectOrCreate?: Enumerable<SlideCreateOrConnectWithoutindicatorInput>
     connect?: Enumerable<SlideWhereUniqueInput>
+  }
+
+  export type GeographyUpdateManyWithoutFrom_Indicator_geographiesInput = {
+    create?: XOR<Enumerable<GeographyUncheckedCreateWithoutFrom_Indicator_geographiesInput>, Enumerable<GeographyCreateWithoutFrom_Indicator_geographiesInput>>
+    connectOrCreate?: Enumerable<GeographyCreateOrConnectWithoutfrom_Indicator_geographiesInput>
+    upsert?: Enumerable<GeographyUpsertWithWhereUniqueWithoutFrom_Indicator_geographiesInput>
+    connect?: Enumerable<GeographyWhereUniqueInput>
+    set?: Enumerable<GeographyWhereUniqueInput>
+    disconnect?: Enumerable<GeographyWhereUniqueInput>
+    delete?: Enumerable<GeographyWhereUniqueInput>
+    update?: Enumerable<GeographyUpdateWithWhereUniqueWithoutFrom_Indicator_geographiesInput>
+    updateMany?: Enumerable<GeographyUpdateManyWithWhereWithoutFrom_Indicator_geographiesInput>
+    deleteMany?: Enumerable<GeographyScalarWhereInput>
   }
 
   export type SlideUpdateManyWithoutIndicatorInput = {
@@ -8192,6 +8319,10 @@ export namespace Prisma {
     varname?: string | null
     title?: string | null
     domain?: string | null
+    year?: number | null
+    source?: string | null
+    url?: string | null
+    geographies?: GeographyCreateNestedManyWithoutFrom_Indicator_geographiesInput
   }
 
   export type IndicatorUncheckedCreateWithoutFrom_Slide_indicatorInput = {
@@ -8199,6 +8330,9 @@ export namespace Prisma {
     varname?: string | null
     title?: string | null
     domain?: string | null
+    year?: number | null
+    source?: string | null
+    url?: string | null
   }
 
   export type IndicatorCreateOrConnectWithoutfrom_Slide_indicatorInput = {
@@ -8210,6 +8344,7 @@ export namespace Prisma {
     layer?: string | null
     title?: string | null
     ordering?: number | null
+    from_Indicator_geographies?: IndicatorCreateNestedManyWithoutGeographiesInput
   }
 
   export type GeographyUncheckedCreateWithoutFrom_Slide_geographyInput = {
@@ -8308,6 +8443,10 @@ export namespace Prisma {
     varname?: NullableStringFieldUpdateOperationsInput | string | null
     title?: NullableStringFieldUpdateOperationsInput | string | null
     domain?: NullableStringFieldUpdateOperationsInput | string | null
+    year?: NullableIntFieldUpdateOperationsInput | number | null
+    source?: NullableStringFieldUpdateOperationsInput | string | null
+    url?: NullableStringFieldUpdateOperationsInput | string | null
+    geographies?: GeographyUpdateManyWithoutFrom_Indicator_geographiesInput
   }
 
   export type IndicatorUncheckedUpdateWithoutFrom_Slide_indicatorInput = {
@@ -8315,6 +8454,9 @@ export namespace Prisma {
     varname?: NullableStringFieldUpdateOperationsInput | string | null
     title?: NullableStringFieldUpdateOperationsInput | string | null
     domain?: NullableStringFieldUpdateOperationsInput | string | null
+    year?: NullableIntFieldUpdateOperationsInput | number | null
+    source?: NullableStringFieldUpdateOperationsInput | string | null
+    url?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type GeographyUpsertWithoutFrom_Slide_geographyInput = {
@@ -8326,6 +8468,7 @@ export namespace Prisma {
     layer?: NullableStringFieldUpdateOperationsInput | string | null
     title?: NullableStringFieldUpdateOperationsInput | string | null
     ordering?: NullableIntFieldUpdateOperationsInput | number | null
+    from_Indicator_geographies?: IndicatorUpdateManyWithoutGeographiesInput
   }
 
   export type GeographyUncheckedUpdateWithoutFrom_Slide_geographyInput = {
@@ -8767,6 +8910,32 @@ export namespace Prisma {
     data: XOR<ProjectUncheckedUpdateManyWithoutFrom_Project_tagsInput, ProjectUpdateManyMutationInput>
   }
 
+  export type IndicatorCreateWithoutGeographiesInput = {
+    varname?: string | null
+    title?: string | null
+    domain?: string | null
+    year?: number | null
+    source?: string | null
+    url?: string | null
+    from_Slide_indicator?: SlideCreateNestedManyWithoutIndicatorInput
+  }
+
+  export type IndicatorUncheckedCreateWithoutGeographiesInput = {
+    id?: number
+    varname?: string | null
+    title?: string | null
+    domain?: string | null
+    year?: number | null
+    source?: string | null
+    url?: string | null
+    from_Slide_indicator?: SlideUncheckedCreateNestedManyWithoutIndicatorInput
+  }
+
+  export type IndicatorCreateOrConnectWithoutgeographiesInput = {
+    where: IndicatorWhereUniqueInput
+    create: XOR<IndicatorUncheckedCreateWithoutGeographiesInput, IndicatorCreateWithoutGeographiesInput>
+  }
+
   export type SlideCreateWithoutGeographyInput = {
     title?: string | null
     description?: string | null
@@ -8815,6 +8984,35 @@ export namespace Prisma {
     create: XOR<SlideUncheckedCreateWithoutGeographyInput, SlideCreateWithoutGeographyInput>
   }
 
+  export type IndicatorUpsertWithWhereUniqueWithoutGeographiesInput = {
+    where: IndicatorWhereUniqueInput
+    update: XOR<IndicatorUncheckedUpdateWithoutGeographiesInput, IndicatorUpdateWithoutGeographiesInput>
+    create: XOR<IndicatorUncheckedCreateWithoutGeographiesInput, IndicatorCreateWithoutGeographiesInput>
+  }
+
+  export type IndicatorUpdateWithWhereUniqueWithoutGeographiesInput = {
+    where: IndicatorWhereUniqueInput
+    data: XOR<IndicatorUncheckedUpdateWithoutGeographiesInput, IndicatorUpdateWithoutGeographiesInput>
+  }
+
+  export type IndicatorUpdateManyWithWhereWithoutGeographiesInput = {
+    where: IndicatorScalarWhereInput
+    data: XOR<IndicatorUncheckedUpdateManyWithoutFrom_Indicator_geographiesInput, IndicatorUpdateManyMutationInput>
+  }
+
+  export type IndicatorScalarWhereInput = {
+    AND?: Enumerable<IndicatorScalarWhereInput>
+    OR?: Enumerable<IndicatorScalarWhereInput>
+    NOT?: Enumerable<IndicatorScalarWhereInput>
+    id?: IntFilter | number
+    varname?: StringNullableFilter | string | null
+    title?: StringNullableFilter | string | null
+    domain?: StringNullableFilter | string | null
+    year?: IntNullableFilter | number | null
+    source?: StringNullableFilter | string | null
+    url?: StringNullableFilter | string | null
+  }
+
   export type SlideUpsertWithWhereUniqueWithoutGeographyInput = {
     where: SlideWhereUniqueInput
     update: XOR<SlideUncheckedUpdateWithoutGeographyInput, SlideUpdateWithoutGeographyInput>
@@ -8829,6 +9027,26 @@ export namespace Prisma {
   export type SlideUpdateManyWithWhereWithoutGeographyInput = {
     where: SlideScalarWhereInput
     data: XOR<SlideUncheckedUpdateManyWithoutFrom_Slide_geographyInput, SlideUpdateManyMutationInput>
+  }
+
+  export type GeographyCreateWithoutFrom_Indicator_geographiesInput = {
+    layer?: string | null
+    title?: string | null
+    ordering?: number | null
+    from_Slide_geography?: SlideCreateNestedManyWithoutGeographyInput
+  }
+
+  export type GeographyUncheckedCreateWithoutFrom_Indicator_geographiesInput = {
+    id?: number
+    layer?: string | null
+    title?: string | null
+    ordering?: number | null
+    from_Slide_geography?: SlideUncheckedCreateNestedManyWithoutGeographyInput
+  }
+
+  export type GeographyCreateOrConnectWithoutfrom_Indicator_geographiesInput = {
+    where: GeographyWhereUniqueInput
+    create: XOR<GeographyUncheckedCreateWithoutFrom_Indicator_geographiesInput, GeographyCreateWithoutFrom_Indicator_geographiesInput>
   }
 
   export type SlideCreateWithoutIndicatorInput = {
@@ -8877,6 +9095,32 @@ export namespace Prisma {
   export type SlideCreateOrConnectWithoutindicatorInput = {
     where: SlideWhereUniqueInput
     create: XOR<SlideUncheckedCreateWithoutIndicatorInput, SlideCreateWithoutIndicatorInput>
+  }
+
+  export type GeographyUpsertWithWhereUniqueWithoutFrom_Indicator_geographiesInput = {
+    where: GeographyWhereUniqueInput
+    update: XOR<GeographyUncheckedUpdateWithoutFrom_Indicator_geographiesInput, GeographyUpdateWithoutFrom_Indicator_geographiesInput>
+    create: XOR<GeographyUncheckedCreateWithoutFrom_Indicator_geographiesInput, GeographyCreateWithoutFrom_Indicator_geographiesInput>
+  }
+
+  export type GeographyUpdateWithWhereUniqueWithoutFrom_Indicator_geographiesInput = {
+    where: GeographyWhereUniqueInput
+    data: XOR<GeographyUncheckedUpdateWithoutFrom_Indicator_geographiesInput, GeographyUpdateWithoutFrom_Indicator_geographiesInput>
+  }
+
+  export type GeographyUpdateManyWithWhereWithoutFrom_Indicator_geographiesInput = {
+    where: GeographyScalarWhereInput
+    data: XOR<GeographyUncheckedUpdateManyWithoutGeographiesInput, GeographyUpdateManyMutationInput>
+  }
+
+  export type GeographyScalarWhereInput = {
+    AND?: Enumerable<GeographyScalarWhereInput>
+    OR?: Enumerable<GeographyScalarWhereInput>
+    NOT?: Enumerable<GeographyScalarWhereInput>
+    id?: IntFilter | number
+    layer?: StringNullableFilter | string | null
+    title?: StringNullableFilter | string | null
+    ordering?: IntNullableFilter | number | null
   }
 
   export type SlideUpsertWithWhereUniqueWithoutIndicatorInput = {
@@ -9184,6 +9428,37 @@ export namespace Prisma {
     userId?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
+  export type IndicatorUpdateWithoutGeographiesInput = {
+    varname?: NullableStringFieldUpdateOperationsInput | string | null
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    domain?: NullableStringFieldUpdateOperationsInput | string | null
+    year?: NullableIntFieldUpdateOperationsInput | number | null
+    source?: NullableStringFieldUpdateOperationsInput | string | null
+    url?: NullableStringFieldUpdateOperationsInput | string | null
+    from_Slide_indicator?: SlideUpdateManyWithoutIndicatorInput
+  }
+
+  export type IndicatorUncheckedUpdateWithoutGeographiesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    varname?: NullableStringFieldUpdateOperationsInput | string | null
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    domain?: NullableStringFieldUpdateOperationsInput | string | null
+    year?: NullableIntFieldUpdateOperationsInput | number | null
+    source?: NullableStringFieldUpdateOperationsInput | string | null
+    url?: NullableStringFieldUpdateOperationsInput | string | null
+    from_Slide_indicator?: SlideUncheckedUpdateManyWithoutIndicatorInput
+  }
+
+  export type IndicatorUncheckedUpdateManyWithoutFrom_Indicator_geographiesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    varname?: NullableStringFieldUpdateOperationsInput | string | null
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    domain?: NullableStringFieldUpdateOperationsInput | string | null
+    year?: NullableIntFieldUpdateOperationsInput | number | null
+    source?: NullableStringFieldUpdateOperationsInput | string | null
+    url?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
   export type SlideUpdateWithoutGeographyInput = {
     title?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
@@ -9245,6 +9520,28 @@ export namespace Prisma {
     url?: NullableStringFieldUpdateOperationsInput | string | null
     indicatorId?: NullableIntFieldUpdateOperationsInput | number | null
     projectId?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
+  export type GeographyUpdateWithoutFrom_Indicator_geographiesInput = {
+    layer?: NullableStringFieldUpdateOperationsInput | string | null
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    ordering?: NullableIntFieldUpdateOperationsInput | number | null
+    from_Slide_geography?: SlideUpdateManyWithoutGeographyInput
+  }
+
+  export type GeographyUncheckedUpdateWithoutFrom_Indicator_geographiesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    layer?: NullableStringFieldUpdateOperationsInput | string | null
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    ordering?: NullableIntFieldUpdateOperationsInput | number | null
+    from_Slide_geography?: SlideUncheckedUpdateManyWithoutGeographyInput
+  }
+
+  export type GeographyUncheckedUpdateManyWithoutGeographiesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    layer?: NullableStringFieldUpdateOperationsInput | string | null
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    ordering?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type SlideUpdateWithoutIndicatorInput = {

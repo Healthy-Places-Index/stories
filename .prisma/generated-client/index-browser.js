@@ -149,7 +149,10 @@ exports.Prisma.IndicatorScalarFieldEnum = makeEnum({
   id: 'id',
   varname: 'varname',
   title: 'title',
-  domain: 'domain'
+  domain: 'domain',
+  year: 'year',
+  source: 'source',
+  url: 'url'
 });
 
 exports.Prisma.AnnotationScalarFieldEnum = makeEnum({

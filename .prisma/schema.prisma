@@ -89,19 +89,24 @@ model Tag {
 }
 
 model Geography {
-  id                   Int     @id @default(autoincrement())
-  layer                String?
-  title                String?
-  ordering             Int?
-  from_Slide_geography Slide[] @relation("Slidegeography")
+  id                         Int         @id @default(autoincrement())
+  layer                      String?
+  title                      String?
+  ordering                   Int?
+  from_Indicator_geographies Indicator[] @relation("Indicator_geographies_many", references: [id])
+  from_Slide_geography       Slide[]     @relation("Slidegeography")
 }
 
 model Indicator {
-  id                   Int     @id @default(autoincrement())
+  id                   Int         @id @default(autoincrement())
   varname              String?
   title                String?
   domain               String?
-  from_Slide_indicator Slide[] @relation("Slideindicator")
+  year                 Int?
+  source               String?
+  url                  String?
+  geographies          Geography[] @relation("Indicator_geographies_many", references: [id])
+  from_Slide_indicator Slide[]     @relation("Slideindicator")
 }
 
 model Annotation {

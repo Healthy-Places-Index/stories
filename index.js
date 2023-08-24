@@ -6,7 +6,6 @@ const { AdminUIApp } = require('@keystonejs/app-admin-ui');
 const { NextApp } = require('@keystonejs/app-next');
 const { PrismaAdapter } = require('@keystonejs/adapter-prisma');
 const expressSession = require('express-session');
-const MongoStore = require('connect-mongo')(expressSession);
 const initialiseData = require('./initial-data');
 
 const CheckAuthentication = require('./routes/authentication');
@@ -21,12 +20,12 @@ const ProjectSchema = require('./lists/Project');
 const SlideSchema = require('./lists/Slide');
 const ImageSchema = require('./lists/Image');
 const TagSchema = require('./lists/Tag');
-const LayerSchema = require('./lists/Layer');
-const BasemapSchema = require('./lists/Basemap');
+const GeographySchema = require('./lists/Geography');
+const IndicatorSchema = require('./lists/Indicator');
 const AnnotationSchema = require('./lists/Annotation');
 
 const PROJECT_NAME = 'imagineRio Narratives';
-const adapterConfig = { url: 'postgres://davidheyman@localhost/hpi-stories' };
+const adapterConfig = { url: process.env.DB_URL };
 
 const keystone = new Keystone({
   adapter: new PrismaAdapter(adapterConfig),
@@ -45,8 +44,8 @@ keystone.createList('Slide', SlideSchema);
 keystone.createList('Image', ImageSchema);
 keystone.createList('Project', ProjectSchema);
 keystone.createList('Tag', TagSchema);
-keystone.createList('Layer', LayerSchema);
-keystone.createList('Basemap', BasemapSchema);
+keystone.createList('Geography', GeographySchema);
+keystone.createList('Indicator', IndicatorSchema);
 keystone.createList('Annotation', AnnotationSchema);
 
 module.exports = {

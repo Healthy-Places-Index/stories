@@ -48,6 +48,41 @@ const addInitialUser = async (keystone, context) => {
   }
 };
 
+const populateGeographies = async (keystone, context) => {
+  const { data: geographies } = await axios.get(
+    `${process.env.NEXT_PUBLIC_API}geographies/hpi?key=${process.env.NEXT_PUBLIC_API_KEY}`
+  );
+  console.log(geographies);
+  const {
+    data: { allGeographies },
+  } = await keystone.executeGraphQL({
+    context,
+    query: `query {
+      allGeographies {
+        layer
+      }
+    }`,
+  });
+
+  console.log(allGeographies);
+
+  return Promise.all(
+    geographies
+      .filter(geography => !allGeographies.find(g => g.layer === geography.layer))
+      .map((geography, ordering) =>
+        keystone.executeGraphQL({
+          context,
+          query: `mutation InitGeography($name: String, $layer: String, $ordering: Int) {
+          createGeography(data: { title: $name, layer: $layer, ordering: $ordering }) {
+            id
+          }
+        }`,
+          variables: { ...geography, ordering },
+        })
+      )
+  );
+};
+
 const populateLayers = async (keystone, context) => {
   // Populate layers
   const {
@@ -203,6 +238,7 @@ const migrateImages = async (keystone, context) => {
 module.exports = async keystone => {
   const context = keystone.createContext({ skipAccessControl: true });
   await addInitialUser(keystone, context);
+  await populateGeographies(keystone, context);
   // await populateLayers(keystone, context);
   // await populateBasemaps(keystone, context);
   // await migrateImages(keystone, context);

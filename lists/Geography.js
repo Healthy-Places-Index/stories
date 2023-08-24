@@ -2,13 +2,13 @@ const { Text, Integer } = require('@keystonejs/fields');
 
 module.exports = {
   fields: {
-    layerId: {
+    layer: {
       type: Text,
     },
     title: {
       type: Text,
     },
-    remoteId: {
+    ordering: {
       type: Integer,
     },
   },

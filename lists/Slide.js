@@ -44,11 +44,6 @@ module.exports = {
       defaultValue: 'Small',
       access,
     },
-    year: {
-      type: Integer,
-      defaultValue: 1900,
-      access,
-    },
     longitude: {
       type: Float,
       defaultValue: -43.1,
@@ -78,21 +73,16 @@ module.exports = {
       type: Text,
       access,
     },
-    layers: {
+    indicator: {
       type: Relationship,
-      ref: 'Layer',
-      many: true,
-      access,
-    },
-    basemap: {
-      type: Relationship,
-      ref: 'Basemap',
+      ref: 'Indicator',
       many: false,
       access,
     },
-    opacity: {
-      type: Float,
-      defaultValue: 1,
+    geography: {
+      type: Relationship,
+      ref: 'Geography',
+      many: false,
       access,
     },
     media: {
@@ -144,7 +134,6 @@ module.exports = {
             query lastSlide($project: ID!) {
               Project(where: { id: $project }) {
                 slides(sortBy: order_ASC) {
-                  year
                   latitude
                   longitude
                   zoom
