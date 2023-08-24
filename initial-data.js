@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 const crypto = require('crypto');
 const axios = require('axios');
-const { map, flatten, omit } = require('lodash');
+const { map, flatten, omit, pick } = require('lodash');
 
 const randomString = () => crypto.randomBytes(6).hexSlice();
 
@@ -52,7 +52,7 @@ const populateGeographies = async (keystone, context) => {
   const { data: geographies } = await axios.get(
     `${process.env.NEXT_PUBLIC_API}geographies/hpi?key=${process.env.NEXT_PUBLIC_API_KEY}`
   );
-  console.log(geographies);
+
   const {
     data: { allGeographies },
   } = await keystone.executeGraphQL({
@@ -63,8 +63,6 @@ const populateGeographies = async (keystone, context) => {
       }
     }`,
   });
-
-  console.log(allGeographies);
 
   return Promise.all(
     geographies
@@ -79,6 +77,81 @@ const populateGeographies = async (keystone, context) => {
         }`,
           variables: { ...geography, ordering },
         })
+      )
+  );
+};
+
+const populateIndicators = async (keystone, context) => {
+  const { data: indicators } = await axios.get(
+    `${process.env.NEXT_PUBLIC_API}indicators/hpi?key=${process.env.NEXT_PUBLIC_API_KEY}`
+  );
+
+  console.log(indicators);
+
+  const {
+    data: { allGeographies },
+  } = await keystone.executeGraphQL({
+    context,
+    query: `query {
+      allGeographies {
+        id
+        layer
+      }
+    }`,
+  });
+
+  const {
+    data: { allIndicators },
+  } = await keystone.executeGraphQL({
+    context,
+    query: `query {
+      allIndicators {
+        varname
+      }
+    }`,
+  });
+
+  return Promise.all(
+    indicators
+      .filter(indicator => !allIndicators.find(i => i.varname === indicator.varname))
+      .map(async indicator =>
+        Promise.all(
+          indicator.dates.map(year => {
+            console.log(
+              JSON.stringify(
+                {
+                  ...indicator,
+                  year,
+                  geographies: {
+                    connect: allGeographies
+                      .filter(g => indicator.geographies.includes(g.layer))
+                      .map(g => pick(g, 'id')),
+                  },
+                },
+                null,
+                2
+              )
+            );
+            return keystone.executeGraphQL({
+              context,
+              query: `mutation InitIndicator($varname: String, $title: String, $year: Int, $source: String, $url: String, $geographies: GeographyRelateToManyInput) {
+                createIndicator(data: { varname: $varname, title: $title, year: $year, source: $source, url: $url, geographies: $geographies }) {
+                  id
+                }
+              }`,
+              variables: {
+                ...pick(indicator, 'varname', 'title', 'source', 'url'),
+                year,
+                geographies: {
+                  connect: allGeographies
+                    .filter(g => indicator.geographies.includes(g.layer))
+                    .map(g => pick(g, 'id')),
+                },
+              },
+              logError: true,
+            });
+          })
+        )
       )
   );
 };
@@ -239,6 +312,7 @@ module.exports = async keystone => {
   const context = keystone.createContext({ skipAccessControl: true });
   await addInitialUser(keystone, context);
   await populateGeographies(keystone, context);
+  await populateIndicators(keystone, context);
   // await populateLayers(keystone, context);
   // await populateBasemaps(keystone, context);
   // await migrateImages(keystone, context);
