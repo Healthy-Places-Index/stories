@@ -1,21 +1,21 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { useQuery, useMutation, gql } from '@apollo/client';
+import { gql, useMutation, useQuery } from '@apollo/client';
 import { map } from 'lodash';
 import ErrorPage from 'next/error';
 import { useRouter } from 'next/router';
 import {
-  Container,
-  Header as Heading,
-  Form,
-  Input,
-  Dropdown,
-  Checkbox,
   Button,
-  Divider,
-  Image as Img,
+  Checkbox,
+  Container,
   Dimmer,
+  Divider,
+  Dropdown,
+  Form,
+  Header as Heading,
+  Image as Img,
+  Input,
   Loader,
 } from 'semantic-ui-react';
 import withApollo from '../../providers/withApollo';

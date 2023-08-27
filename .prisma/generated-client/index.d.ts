@@ -15,7 +15,6 @@ export type User = {
   name: string | null
   email: string | null
   institution: string | null
-  language: string | null
   verified: boolean | null
   verifyId: string | null
   resetId: string | null
@@ -869,7 +868,6 @@ export namespace Prisma {
     name: string | null
     email: string | null
     institution: string | null
-    language: string | null
     verified: boolean | null
     verifyId: string | null
     resetId: string | null
@@ -884,7 +882,6 @@ export namespace Prisma {
     name: string | null
     email: string | null
     institution: string | null
-    language: string | null
     verified: boolean | null
     verifyId: string | null
     resetId: string | null
@@ -899,7 +896,6 @@ export namespace Prisma {
     name: number | null
     email: number | null
     institution: number | null
-    language: number | null
     verified: number | null
     verifyId: number | null
     resetId: number | null
@@ -924,7 +920,6 @@ export namespace Prisma {
     name?: true
     email?: true
     institution?: true
-    language?: true
     verified?: true
     verifyId?: true
     resetId?: true
@@ -939,7 +934,6 @@ export namespace Prisma {
     name?: true
     email?: true
     institution?: true
-    language?: true
     verified?: true
     verifyId?: true
     resetId?: true
@@ -954,7 +948,6 @@ export namespace Prisma {
     name?: true
     email?: true
     institution?: true
-    language?: true
     verified?: true
     verifyId?: true
     resetId?: true
@@ -1041,7 +1034,6 @@ export namespace Prisma {
     name?: boolean
     email?: boolean
     institution?: boolean
-    language?: boolean
     verified?: boolean
     verifyId?: boolean
     resetId?: boolean
@@ -6676,7 +6668,6 @@ export namespace Prisma {
     name: 'name',
     email: 'email',
     institution: 'institution',
-    language: 'language',
     verified: 'verified',
     verifyId: 'verifyId',
     resetId: 'resetId',
@@ -6815,7 +6806,6 @@ export namespace Prisma {
     name?: StringNullableFilter | string | null
     email?: StringNullableFilter | string | null
     institution?: StringNullableFilter | string | null
-    language?: StringNullableFilter | string | null
     verified?: BoolNullableFilter | boolean | null
     verifyId?: StringNullableFilter | string | null
     resetId?: StringNullableFilter | string | null
@@ -6831,7 +6821,6 @@ export namespace Prisma {
     name?: SortOrder
     email?: SortOrder
     institution?: SortOrder
-    language?: SortOrder
     verified?: SortOrder
     verifyId?: SortOrder
     resetId?: SortOrder
@@ -7073,7 +7062,6 @@ export namespace Prisma {
     name?: string | null
     email?: string | null
     institution?: string | null
-    language?: string | null
     verified?: boolean | null
     verifyId?: string | null
     resetId?: string | null
@@ -7089,7 +7077,6 @@ export namespace Prisma {
     name?: string | null
     email?: string | null
     institution?: string | null
-    language?: string | null
     verified?: boolean | null
     verifyId?: string | null
     resetId?: string | null
@@ -7104,7 +7091,6 @@ export namespace Prisma {
     name?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     institution?: NullableStringFieldUpdateOperationsInput | string | null
-    language?: NullableStringFieldUpdateOperationsInput | string | null
     verified?: NullableBoolFieldUpdateOperationsInput | boolean | null
     verifyId?: NullableStringFieldUpdateOperationsInput | string | null
     resetId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -7120,7 +7106,6 @@ export namespace Prisma {
     name?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     institution?: NullableStringFieldUpdateOperationsInput | string | null
-    language?: NullableStringFieldUpdateOperationsInput | string | null
     verified?: NullableBoolFieldUpdateOperationsInput | boolean | null
     verifyId?: NullableStringFieldUpdateOperationsInput | string | null
     resetId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -7135,7 +7120,6 @@ export namespace Prisma {
     name?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     institution?: NullableStringFieldUpdateOperationsInput | string | null
-    language?: NullableStringFieldUpdateOperationsInput | string | null
     verified?: NullableBoolFieldUpdateOperationsInput | boolean | null
     verifyId?: NullableStringFieldUpdateOperationsInput | string | null
     resetId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -7150,7 +7134,6 @@ export namespace Prisma {
     name?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     institution?: NullableStringFieldUpdateOperationsInput | string | null
-    language?: NullableStringFieldUpdateOperationsInput | string | null
     verified?: NullableBoolFieldUpdateOperationsInput | boolean | null
     verifyId?: NullableStringFieldUpdateOperationsInput | string | null
     resetId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -8726,7 +8709,6 @@ export namespace Prisma {
     name?: string | null
     email?: string | null
     institution?: string | null
-    language?: string | null
     verified?: boolean | null
     verifyId?: string | null
     resetId?: string | null
@@ -8741,7 +8723,6 @@ export namespace Prisma {
     name?: string | null
     email?: string | null
     institution?: string | null
-    language?: string | null
     verified?: boolean | null
     verifyId?: string | null
     resetId?: string | null
@@ -8829,7 +8810,6 @@ export namespace Prisma {
     name?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     institution?: NullableStringFieldUpdateOperationsInput | string | null
-    language?: NullableStringFieldUpdateOperationsInput | string | null
     verified?: NullableBoolFieldUpdateOperationsInput | boolean | null
     verifyId?: NullableStringFieldUpdateOperationsInput | string | null
     resetId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -8844,7 +8824,6 @@ export namespace Prisma {
     name?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     institution?: NullableStringFieldUpdateOperationsInput | string | null
-    language?: NullableStringFieldUpdateOperationsInput | string | null
     verified?: NullableBoolFieldUpdateOperationsInput | boolean | null
     verifyId?: NullableStringFieldUpdateOperationsInput | string | null
     resetId?: NullableStringFieldUpdateOperationsInput | string | null

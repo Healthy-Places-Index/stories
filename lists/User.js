@@ -52,19 +52,6 @@ module.exports = {
         delete: access.userIsAdminOrOwner,
       },
     },
-    language: {
-      type: Select,
-      options: [
-        { value: 'en', label: 'English' },
-        { value: 'pt', label: 'Portuguese' },
-      ],
-      access: {
-        read: true,
-        update: access.userIsAdminOrOwner,
-        create: true,
-        delete: access.userIsAdminOrOwner,
-      },
-    },
     verified: {
       type: Checkbox,
       access: {

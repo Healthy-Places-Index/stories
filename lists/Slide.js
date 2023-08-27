@@ -5,7 +5,7 @@ const { gql } = require('apollo-server-express');
 const { createDefaultAccess } = require('./access');
 
 const defaultAuth = async ({ context, existingItem, authentication: { item } }) => {
-  const project = existingItem.project.toString();
+  const project = existingItem.projectId.toString();
   const { data } = await context.executeGraphQL({
     query: gql`
       query getUser($project: ID!) {

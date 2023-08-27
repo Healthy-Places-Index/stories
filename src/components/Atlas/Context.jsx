@@ -1,11 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
-import { useQuery, useMutation, gql } from '@apollo/client';
-import { pick, isEqual } from 'lodash';
+import { gql, useMutation, useQuery } from '@apollo/client';
+import { isEqual, pick } from 'lodash';
 import { Dimmer, Loader } from 'semantic-ui-react';
 
 import Atlas from './index';
-import { minZoom, maxZoom, minLon, maxLon, minLat, maxLat } from '../../config/map';
+import { maxLat, maxLon, maxZoom, minLat, minLon, minZoom } from '../../config/map';
 import debouncedMutation from '../../providers/debouncedMutation';
 import useLocale from '../../hooks/useLocale';
 
@@ -13,28 +13,15 @@ const GET_SLIDE_ATLAS = gql`
   query GetSlideYear($slide: ID!) {
     Slide(where: { id: $slide }) {
       id
-      year
       longitude
       latitude
       zoom
       bearing
       pitch
       selectedFeature
-      opacity
       annotations {
         id
         feature
-      }
-      disabledLayers: layers {
-        id
-        layerId
-      }
-      basemap {
-        id
-        ssid
-        title
-        thumbnail
-        creator
       }
     }
   }

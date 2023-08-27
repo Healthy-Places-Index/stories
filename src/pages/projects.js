@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { useQuery, useMutation, gql } from '@apollo/client';
+import { gql, useMutation, useQuery } from '@apollo/client';
 import { useRouter } from 'next/router';
-import { Container, Header as Heading, Segment, Button, Image, Icon } from 'semantic-ui-react';
+import { Button, Container, Header as Heading, Icon, Image, Segment } from 'semantic-ui-react';
 import withApollo from '../providers/withApollo';
 
 import Header from '../components/Header';
@@ -54,6 +54,7 @@ const CREATE_PROJECT = gql`
 `;
 
 const Projects = ({ user }) => {
+  console.log(user);
   const [isLoading, setLoading] = useState(false);
   const { loading, error, data } = useQuery(GET_PROJECTS, { variables: { user: user.id } });
   const [createProject] = useMutation(CREATE_PROJECT);

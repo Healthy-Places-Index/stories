@@ -4,8 +4,9 @@ const { Wysiwyg } = require('@keystonejs/fields-wysiwyg-tinymce');
 
 const { userIsAdmin, createDefaultAccess } = require('./access');
 
-const defaultAuth = ({ existingItem, authentication: { item } }) =>
-  (item && existingItem.user.toString() === item.id) || item.isAdmin;
+const defaultAuth = ({ existingItem, authentication: { item } }) => {
+  return (item && existingItem.userId.toString() === item.id) || item.isAdmin;
+};
 
 const access = createDefaultAccess(defaultAuth);
 

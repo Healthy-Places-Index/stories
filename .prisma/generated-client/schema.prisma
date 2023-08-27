@@ -14,7 +14,6 @@ model User {
   name            String?
   email           String?   @unique
   institution     String?
-  language        String?
   verified        Boolean?
   verifyId        String?
   resetId         String?

@@ -1,16 +1,16 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
-import { useQuery, useMutation } from '@apollo/client';
-import { Grid, Segment, Form, Input, Dropdown, Dimmer, Loader } from 'semantic-ui-react';
+import { useMutation, useQuery } from '@apollo/client';
+import { Dimmer, Dropdown, Form, Grid, Input, Loader } from 'semantic-ui-react';
 
 import {
   GET_SLIDES,
-  UPDATE_SLIDE_TITLE,
-  UPDATE_SLIDE_DESCRIPTION,
-  UPDATE_SLIDE_SIZE,
-  UPDATE_SLIDE_MEDIA,
   UPDATE_IMAGE,
+  UPDATE_SLIDE_DESCRIPTION,
+  UPDATE_SLIDE_MEDIA,
+  UPDATE_SLIDE_SIZE,
+  UPDATE_SLIDE_TITLE,
 } from './graphql';
 import { useDraw } from '../../providers/DrawProvider';
 import debouncedMutation from '../../providers/debouncedMutation';
@@ -18,9 +18,6 @@ import useLocale from '../../hooks/useLocale';
 
 import AtlasContext from '../Atlas/Context';
 import Image from '../Image';
-import Year from '../Year';
-import Layers from '../Layers';
-import Search from '../Search';
 import Wysiwyg from '../Wysiwyg';
 import DrawList from '../DrawList';
 import validateMediaUrl from '../../utils/validateMediaUrl';
@@ -189,13 +186,6 @@ const Editor = ({ slide }) => {
         </Grid.Column>
         <Grid.Column width={10} style={{ padding: 0 }}>
           <AtlasContext slide={slide} />
-          <Segment className={styles.control}>
-            <div style={{ float: 'right', width: 85 }}>
-              <Layers slide={slide} />
-              <Search slide={slide} />
-            </div>
-            <Year slide={slide} />
-          </Segment>
         </Grid.Column>
       </Grid.Row>
     </Grid>
