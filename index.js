@@ -6,6 +6,7 @@ const { AdminUIApp } = require('@keystonejs/app-admin-ui');
 const { NextApp } = require('@keystonejs/app-next');
 const { PrismaAdapter } = require('@keystonejs/adapter-prisma');
 const expressSession = require('express-session');
+const PgSession = require('connect-pg-simple')(expressSession);
 const initialiseData = require('./initial-data');
 
 const CheckAuthentication = require('./routes/authentication');
@@ -31,7 +32,9 @@ const keystone = new Keystone({
   adapter: new PrismaAdapter(adapterConfig),
   onConnect: process.env.CREATE_TABLES !== 'true' && initialiseData,
   cookieSecret: process.env.COOKIE_SECRET,
-  // sessionStore: new MongoStore({ url: `${process.env.MONGO_URI}${process.env.MONGO_DB}` }),
+  sessionStore: new PgSession({
+    createTableIfMissing: true,
+  }),
 });
 
 keystone.createList('User', UserSchema);

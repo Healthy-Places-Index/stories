@@ -86,8 +86,6 @@ const populateIndicators = async (keystone, context) => {
     `${process.env.NEXT_PUBLIC_API}indicators/hpi?key=${process.env.NEXT_PUBLIC_API_KEY}`
   );
 
-  console.log(indicators);
-
   const {
     data: { allGeographies },
   } = await keystone.executeGraphQL({

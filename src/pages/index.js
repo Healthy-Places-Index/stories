@@ -1,9 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
-import parse from 'html-react-parser';
 import { useRouter } from 'next/router';
-import { Container, Header as Heading, Image, Icon } from 'semantic-ui-react';
+import { Container, Header as Heading, Icon, Image } from 'semantic-ui-react';
 import withApollo from '../providers/withApollo';
 
 import Header from '../components/Header';
@@ -11,9 +10,7 @@ import Head from '../components/Head';
 import Gallery from '../components/Gallery';
 import useLocale from '../hooks/useLocale';
 
-const ParsedContent = ({ content }) => parse(content);
-
-export const Home = ({ user, data, content }) => {
+export const Home = ({ user, data }) => {
   const { locale } = useRouter();
   const { gallery, signUp, manage, login } = useLocale();
 
@@ -21,11 +18,6 @@ export const Home = ({ user, data, content }) => {
     <div style={{ minHeight: '100vh' }}>
       <Header user={user} />
       <Head title="imagineRio Narratives" />
-      <section style={{ backgroundColor: 'rgb(247, 249, 252)', padding: '50px 0px' }}>
-        <Container>
-          <ParsedContent content={content} />
-        </Container>
-      </section>
       <Container style={{ marginTop: 30, marginBottom: 30 }}>
         {!user && (
           <>
@@ -70,7 +62,6 @@ Home.propTypes = {
   data: PropTypes.shape({
     allProjects: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   }).isRequired,
-  content: PropTypes.string.isRequired,
 };
 
 Home.defaultProps = {
@@ -79,7 +70,7 @@ Home.defaultProps = {
 
 export default withApollo(Home);
 
-export async function getServerSideProps({ req, locale }) {
+export async function getServerSideProps({ req }) {
   const {
     data: { data },
   } = await axios.post(`${req.protocol}://${req.get('Host')}/admin/api`, {
@@ -110,27 +101,10 @@ export async function getServerSideProps({ req, locale }) {
   let user = null;
   if (req.user) user = req.user;
 
-  const {
-    data: {
-      post_stream: { posts },
-    },
-  } = await axios.get(
-    `${process.env.NEXT_PUBLIC_PAGE_URL}${
-      locale === 'pt' ? 'pt-narratives-about/46' : 'en-narratives-about/96'
-    }.json`,
-    {
-      headers: {
-        'Api-Key': process.env.NEXT_PUBLIC_PAGE_API,
-        'Api-Username': 'system',
-      },
-    }
-  );
-
   return {
     props: {
       data,
       user,
-      content: posts[0].cooked,
     },
   };
 }
