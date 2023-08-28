@@ -15,6 +15,7 @@
     "build": "cross-env NODE_ENV=production keystone build",
     "start": "cross-env NODE_ENV=production keystone start",
     "create-tables": "cross-env CREATE_TABLES=true keystone create-tables",
+    "migrate": "npx prisma migrate dev --preview-feature --schema .prisma/schema.prisma",
     "test": "jest",
     "coverage": "jest --coverage"
   },

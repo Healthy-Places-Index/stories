@@ -66,7 +66,7 @@ const populateGeographies = async (keystone, context) => {
 
   return Promise.all(
     geographies
-      .filter(geography => !allGeographies.find(g => g.layer === geography.layer))
+      .filter(geography => !allGeographies?.find(g => g.layer === geography.layer))
       .map((geography, ordering) =>
         keystone.executeGraphQL({
           context,
@@ -111,7 +111,7 @@ const populateIndicators = async (keystone, context) => {
 
   return Promise.all(
     indicators
-      .filter(indicator => !allIndicators.find(i => i.varname === indicator.varname))
+      .filter(indicator => !allIndicators?.find(i => i.varname === indicator.varname))
       .map(async indicator =>
         Promise.all(
           indicator.dates.map(year => {
