@@ -9,7 +9,6 @@ import ReactMapGL, {
   LinearInterpolator,
 } from 'react-map-gl';
 import axios from 'axios';
-import { map as mapProp } from 'lodash';
 import { Icon } from 'semantic-ui-react';
 import { Editor } from 'react-map-gl-draw';
 
@@ -24,17 +23,7 @@ const labelLayout = {
   'text-field': ['get', 'title'],
 };
 
-const Atlas = ({
-  handler,
-  viewport,
-  year,
-  viewer,
-  disabledLayers,
-  selectedFeature,
-  activeBasemap,
-  opacity,
-  annotations,
-}) => {
+const Atlas = ({ handler, viewport, viewer, selectedFeature, annotations }) => {
   const mapRef = useRef(null);
 
   let drawProps = [];
@@ -44,97 +33,14 @@ const Atlas = ({
   const [is2D, setIs2D] = useState(true);
   const [locked, setLocked] = useState(false);
 
-  const setMapYear = () => {
-    const map = mapRef.current.getMap();
-    let style = null;
-    try {
-      style = map.getStyle();
-    } catch (err) {
-      style = null;
-    } finally {
-      if (style) {
-        style.layers = style.layers.map(layer => {
-          if (layer.source === 'composite') {
-            const filter =
-              layer.filter && layer.filter[1][0] === 'match' ? layer.filter.slice(0, 2) : ['all'];
-            return {
-              ...layer,
-              filter: [
-                ...filter,
-                ['<=', ['get', 'firstyear'], year],
-                ['>=', ['get', 'lastyear'], year],
-              ],
-            };
-          }
-          if (layer.source?.match('hillshade')) {
-            const hillshades = Object.keys(style.sources)
-              .filter(s => s.match('hillshade'))
-              .sort(
-                (a, b) => parseInt(b.replace(/\D/gi, ''), 10) - parseInt(a.replace(/\D/gi, ''), 10)
-              );
-
-            const newSource = hillshades.find(h => parseInt(h.replace(/\D/gi, ''), 10) <= year);
-            if (newSource) {
-              return {
-                ...layer,
-                source: newSource,
-              };
-            }
-          }
-          return layer;
-        });
-        map.setStyle(style);
-      }
-    }
-  };
-
-  const setDisabledLayers = () => {
-    const layerIds = mapProp(disabledLayers, 'layerId');
-    const map = mapRef.current.getMap();
-    let style = null;
-    try {
-      style = map.getStyle();
-    } catch (err) {
-      style = null;
-    } finally {
-      if (style) {
-        style.layers = style.layers.map(layer => {
-          const layout = layer.layout || {};
-          if (layerIds.includes(layer['source-layer'])) {
-            layout.visibility = 'none';
-          } else {
-            layout.visibility = 'visible';
-          }
-          return {
-            ...layer,
-            layout,
-          };
-        });
-        map.setStyle(style);
-      }
-    }
-  };
-
   useEffect(() => {
     if (viewport.latitude && viewport.longitude && viewport.zoom) {
       setMapViewport(viewport);
     }
   }, [viewport]);
-  useEffect(setMapYear, [year]);
-  useEffect(setDisabledLayers, [disabledLayers]);
 
   useEffect(() => {
-    const loadGeoJSON = async () => {
-      const { data } = await axios.get(
-        `${process.env.NEXT_PUBLIC_SEARCH_API}/feature/${selectedFeature}?year=${year}`
-      );
-      setFeatureData(data);
-    };
-    if (selectedFeature) {
-      loadGeoJSON();
-    } else {
-      setFeatureData(null);
-    }
+    setFeatureData(null);
   }, [selectedFeature]);
 
   const onViewportChange = nextViewport => {
@@ -145,8 +51,6 @@ const Atlas = ({
   };
 
   const onMapLoad = () => {
-    setMapYear();
-    setDisabledLayers();
     onViewportChange(viewport);
   };
 
@@ -184,29 +88,6 @@ const Atlas = ({
     <ReactMapGL {...getMapProps()}>
       {drawProps.editing && <Editor {...drawProps} />}
       {!viewer && <Toolbar />}
-      {activeBasemap && (
-        <>
-          <AttributionControl
-            style={{ right: 0, bottom: 0 }}
-            customAttribution={`${activeBasemap.title} - ${activeBasemap.creator}`}
-          />
-          <Source
-            key={activeBasemap.ssid}
-            type="raster"
-            tiles={[
-              `https://imaginerio-rasters.s3.us-east-1.amazonaws.com/${activeBasemap.ssid}/{z}/{x}/{y}.png`,
-            ]}
-            scheme="tms"
-          >
-            <Layer
-              id="overlay"
-              type="raster"
-              paint={{ 'raster-opacity': opacity }}
-              beforeId="expressway-label"
-            />
-          </Source>
-        </>
-      )}
       {featureData && (
         <Source key={selectedFeature} type="geojson" data={featureData}>
           {featureData.geometry.type.match(/point/i) ? (
@@ -217,13 +98,13 @@ const Atlas = ({
                 id="selected-case"
                 type="line"
                 paint={{ 'line-width': 6, 'line-color': '#eeeeee' }}
-                beforeId={activeBasemap ? 'overlay' : 'expressway-label'}
+                // beforeId={activeBasemap ? 'overlay' : 'expressway-label'}
               />
               <Layer
                 id="selected-line"
                 type="line"
                 paint={{ 'line-width': 3, 'line-color': '#000000' }}
-                beforeId={activeBasemap ? 'overlay' : 'expressway-label'}
+                // beforeId={activeBasemap ? 'overlay' : 'expressway-label'}
               />
             </>
           )}
@@ -312,21 +193,14 @@ Atlas.propTypes = {
     bearing: PropTypes.number,
     pitch: PropTypes.number,
   }).isRequired,
-  year: PropTypes.number.isRequired,
   viewer: PropTypes.bool,
-  disabledLayers: PropTypes.arrayOf(PropTypes.shape()),
-  activeBasemap: PropTypes.shape(),
   selectedFeature: PropTypes.string,
-  opacity: PropTypes.number,
   annotations: PropTypes.shape(),
 };
 
 Atlas.defaultProps = {
   viewer: false,
-  disabledLayers: [],
-  activeBasemap: null,
   selectedFeature: null,
-  opacity: 1,
   annotations: null,
 };
 
