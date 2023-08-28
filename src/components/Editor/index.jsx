@@ -23,6 +23,7 @@ import DrawList from '../DrawList';
 import validateMediaUrl from '../../utils/validateMediaUrl';
 
 import styles from './Editor.module.css';
+import Chooser from '../Chooser';
 
 const Editor = ({ slide }) => {
   const [title, setTitle] = useState('');
@@ -186,6 +187,7 @@ const Editor = ({ slide }) => {
         </Grid.Column>
         <Grid.Column width={10} style={{ padding: 0 }}>
           <AtlasContext slide={slide} />
+          <Chooser slide={slide} />
         </Grid.Column>
       </Grid.Row>
     </Grid>
