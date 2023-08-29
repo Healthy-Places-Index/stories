@@ -21,6 +21,7 @@ const GET_SLIDE_ATLAS = gql`
       pitch
       selectedFeature
       indicator {
+        id
         title
         varname
         year
@@ -28,6 +29,7 @@ const GET_SLIDE_ATLAS = gql`
         url
       }
       geography {
+        id
         layer
       }
       annotations {
@@ -113,7 +115,6 @@ const AtlasContext = ({ slide }) => {
           setChoroplethData(res.data);
         });
 
-    console.log(loading, error, data);
     if (data?.Slide.indicator && data?.Slide.geography) {
       fetchData();
     }

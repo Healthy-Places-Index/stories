@@ -5,7 +5,6 @@ export const blue = ['#edf8fb', '#b3cde3', '#8c96c6', '#88419d'];
 
 const makeStyle = (values, grouper, colors) => {
   const groups = groupBy(values, grouper);
-  console.log(groups);
   return [
     'case',
     ...Object.keys(groups).reduce(
@@ -21,7 +20,5 @@ const makeStyle = (values, grouper, colors) => {
 };
 
 export const makeChoropleth = data => {
-  console.log(data);
-  const classification = makeStyle(data, d => Math.min(3, Math.floor(d.percentile * 4)), hpi);
-  return classification;
+  return makeStyle(data, d => Math.min(3, Math.floor(d.percentile * 4)), hpi);
 };
