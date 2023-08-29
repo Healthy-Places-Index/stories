@@ -17,6 +17,7 @@ import Toolbar from '../Toolbar';
 
 import { minZoom, maxZoom } from '../../config/map';
 import styles from './Atlas.module.css';
+import { makeChoropleth } from './utils';
 
 const labelLayout = {
   'text-font': ['Lato Regular'],
@@ -31,7 +32,7 @@ const Atlas = ({
   annotations,
   indicator,
   geography,
-  year,
+  choroplethData,
 }) => {
   const mapRef = useRef(null);
 
@@ -113,6 +114,15 @@ const Atlas = ({
               'line-color': '#666666',
             }}
           />
+          {choroplethData && (
+            <Layer
+              id="choropleth"
+              type="fill"
+              beforeId="border"
+              source-layer={geography}
+              paint={{ 'fill-color': makeChoropleth(choroplethData) }}
+            />
+          )}
         </Source>
       )}
       {featureData && (
@@ -223,9 +233,15 @@ Atlas.propTypes = {
   viewer: PropTypes.bool,
   selectedFeature: PropTypes.string,
   annotations: PropTypes.shape(),
-  indicator: PropTypes.string,
+  indicator: PropTypes.shape({
+    title: PropTypes.string,
+    varname: PropTypes.string,
+    year: PropTypes.number,
+    source: PropTypes.string,
+    url: PropTypes.string,
+  }),
   geography: PropTypes.string,
-  year: PropTypes.number,
+  choroplethData: PropTypes.arrayOf(PropTypes.shape()),
 };
 
 Atlas.defaultProps = {
@@ -234,7 +250,7 @@ Atlas.defaultProps = {
   annotations: null,
   indicator: null,
   geography: null,
-  year: null,
+  choroplethData: null,
 };
 
 export default Atlas;

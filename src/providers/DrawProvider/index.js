@@ -87,7 +87,10 @@ function DrawProvider({ children }) {
   const [state, dispatch] = useReducer(reducer, INITIAL_STATE);
   const [createAnnotation] = useMutation(CREATE_ANNOTATION);
   const [updateAnnotation] = useMutation(UPDATE_ANNOTATION_FEATURE);
-  const { data: annotations } = useQuery(GET_ANNOTATIONS, { variables: { slide: state.slide } });
+  const { data: annotations } = useQuery(GET_ANNOTATIONS, {
+    variables: { slide: state.slide },
+    skip: !state.slide,
+  });
 
   const updateTimer = useRef();
   const { newAnnotation } = useLocale();

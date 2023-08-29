@@ -7,7 +7,7 @@ import { Dropdown, Segment } from 'semantic-ui-react';
 import styles from './Chooser.module.css';
 
 const GET_SLIDE = gql`
-  query GetSlide($slide: ID!) {
+  query GetSlideIndicator($slide: ID!) {
     Slide(where: { id: $slide }) {
       id
       indicator {
@@ -21,7 +21,7 @@ const GET_SLIDE = gql`
 `;
 
 const GET_INDICATORS = gql`
-  query {
+  query GetAllIndicators {
     indicators: allIndicators(orderBy: "year_DESC") {
       id
       varname
@@ -38,7 +38,7 @@ const GET_INDICATORS = gql`
 `;
 
 const UPDATE_SLIDE = gql`
-  mutation UpdateSlide(
+  mutation UpdateSlideIndicator(
     $slide: ID!
     $indicator: IndicatorRelateToOneInput
     $geography: GeographyRelateToOneInput
