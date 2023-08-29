@@ -17,7 +17,7 @@
     "create-tables": "cross-env CREATE_TABLES=true keystone create-tables",
     "migrate": "npx prisma migrate dev --preview-feature --schema .prisma/schema.prisma",
     "generate": "npx prisma generate --schema .prisma/schema.prisma",
-    "postinstall": "npm run generate",
+    "postinstall": "npm run migrate && npm run generate",
     "test": "jest",
     "coverage": "jest --coverage"
   },
