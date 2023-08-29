@@ -4,8 +4,9 @@ import PropTypes from 'prop-types';
 import ReactMapGL, { Layer, LinearInterpolator, NavigationControl, Source } from 'react-map-gl';
 import { Icon } from 'semantic-ui-react';
 import { Editor } from 'react-map-gl-draw';
-
 import axios from 'axios';
+
+import useSWR from 'swr';
 import { useDraw } from '../../providers/DrawProvider';
 import Toolbar from '../Toolbar';
 
@@ -18,6 +19,13 @@ const labelLayout = {
   'text-field': ['get', 'title'],
 };
 
+const fetcher = indicator =>
+  axios
+    .get(
+      `${process.env.NEXT_PUBLIC_API}hpi?geography=${indicator.geography}&year=${indicator.year}&indicator=${indicator.varname}&format=json&key=${process.env.NEXT_PUBLIC_API_KEY}`
+    )
+    .then(res => res.data);
+
 const Atlas = ({
   handler,
   viewport,
@@ -28,6 +36,7 @@ const Atlas = ({
   geography,
 }) => {
   const mapRef = useRef(null);
+  const { data: choroplethData } = useSWR(indicator, fetcher);
 
   let drawProps = [];
   if (!viewer) [drawProps] = useDraw();
@@ -35,7 +44,6 @@ const Atlas = ({
   const [featureData, setFeatureData] = useState(null);
   const [is2D, setIs2D] = useState(true);
   const [locked, setLocked] = useState(false);
-  const [choroplethData, setChoroplethData] = useState(null);
 
   useEffect(() => {
     if (viewport.latitude && viewport.longitude && viewport.zoom) {
@@ -46,23 +54,6 @@ const Atlas = ({
   useEffect(() => {
     setFeatureData(null);
   }, [selectedFeature]);
-
-  useEffect(() => {
-    const fetchData = async () =>
-      axios
-        .get(
-          `${process.env.NEXT_PUBLIC_API}hpi?geography=${indicator.geography}&year=${indicator.year}&indicator=${indicator.varname}&format=json&key=${process.env.NEXT_PUBLIC_API_KEY}`
-        )
-        .then(res => {
-          setChoroplethData(res.data);
-        });
-
-    if (indicator) {
-      fetchData();
-    } else {
-      setChoroplethData(null);
-    }
-  }, [indicator]);
 
   const onViewportChange = nextViewport => {
     if (viewport.latitude && viewport.longitude && viewport.zoom) {
