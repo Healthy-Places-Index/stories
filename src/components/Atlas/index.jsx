@@ -1,21 +1,15 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
-import ReactMapGL, {
-  Source,
-  Layer,
-  NavigationControl,
-  AttributionControl,
-  LinearInterpolator,
-} from 'react-map-gl';
-import axios from 'axios';
+import ReactMapGL, { Layer, LinearInterpolator, NavigationControl, Source } from 'react-map-gl';
 import { Icon } from 'semantic-ui-react';
 import { Editor } from 'react-map-gl-draw';
 
+import axios from 'axios';
 import { useDraw } from '../../providers/DrawProvider';
 import Toolbar from '../Toolbar';
 
-import { minZoom, maxZoom } from '../../config/map';
+import { maxZoom, minZoom } from '../../config/map';
 import styles from './Atlas.module.css';
 import { makeChoropleth } from './utils';
 
@@ -32,9 +26,9 @@ const Atlas = ({
   annotations,
   indicator,
   geography,
-  choroplethData,
 }) => {
   const mapRef = useRef(null);
+  const choroplethLoaded = useRef(false);
 
   let drawProps = [];
   if (!viewer) [drawProps] = useDraw();
@@ -42,6 +36,7 @@ const Atlas = ({
   const [featureData, setFeatureData] = useState(null);
   const [is2D, setIs2D] = useState(true);
   const [locked, setLocked] = useState(false);
+  const [choroplethData, setChoroplethData] = useState(null);
 
   useEffect(() => {
     if (viewport.latitude && viewport.longitude && viewport.zoom) {
@@ -52,6 +47,24 @@ const Atlas = ({
   useEffect(() => {
     setFeatureData(null);
   }, [selectedFeature]);
+
+  useEffect(() => {
+    const fetchData = async () =>
+      axios
+        .get(
+          `${process.env.NEXT_PUBLIC_API}hpi?geography=${indicator.geography}&year=${indicator.year}&indicator=${indicator.varname}&format=json&key=${process.env.NEXT_PUBLIC_API_KEY}`
+        )
+        .then(res => {
+          setChoroplethData(res.data);
+        });
+
+    console.log(indicator);
+    if (indicator) {
+      fetchData();
+    } else {
+      setChoroplethData(null);
+    }
+  }, [indicator]);
 
   const onViewportChange = nextViewport => {
     if (viewport.latitude && viewport.longitude && viewport.zoom) {
@@ -239,9 +252,9 @@ Atlas.propTypes = {
     year: PropTypes.number,
     source: PropTypes.string,
     url: PropTypes.string,
+    geography: PropTypes.string,
   }),
   geography: PropTypes.string,
-  choroplethData: PropTypes.arrayOf(PropTypes.shape()),
 };
 
 Atlas.defaultProps = {
@@ -250,7 +263,6 @@ Atlas.defaultProps = {
   annotations: null,
   indicator: null,
   geography: null,
-  choroplethData: null,
 };
 
 export default Atlas;

@@ -3,8 +3,6 @@ import PropTypes from 'prop-types';
 import { gql, useMutation, useQuery } from '@apollo/client';
 import { isEqual, pick } from 'lodash';
 import { Dimmer, Loader } from 'semantic-ui-react';
-
-import axios from 'axios';
 import Atlas from './index';
 import { maxLat, maxLon, maxZoom, minLat, minLon, minZoom } from '../../config/map';
 import debouncedMutation from '../../providers/debouncedMutation';
@@ -91,7 +89,6 @@ const AtlasContext = ({ slide }) => {
 
   const [mapViewport, setMapViewport] = useState(null);
   const [annotations, setAnnotations] = useState(null);
-  const [choroplethData, setChoroplethData] = useState(null);
 
   useEffect(() => {
     if (data) {
@@ -104,21 +101,6 @@ const AtlasContext = ({ slide }) => {
       }
     }
   }, [loading, data]);
-
-  useEffect(() => {
-    const fetchData = async () =>
-      axios
-        .get(
-          `${process.env.NEXT_PUBLIC_API}hpi?geography=${data.Slide.geography.layer}&year=${data.Slide.indicator.year}&indicator=${data.Slide.indicator.varname}&format=json&key=${process.env.NEXT_PUBLIC_API_KEY}`
-        )
-        .then(res => {
-          setChoroplethData(res.data);
-        });
-
-    if (data?.Slide.indicator && data?.Slide.geography) {
-      fetchData();
-    }
-  }, [data]);
 
   const onViewportChange = nextViewport => {
     if (nextViewport) {
@@ -162,9 +144,11 @@ const AtlasContext = ({ slide }) => {
       selectedFeature={data.Slide.selectedFeature}
       opacity={data.Slide.opacity}
       annotations={annotations}
-      indicator={data.Slide.indicator}
+      indicator={{
+        ...data.Slide.indicator,
+        geography: data.Slide.geography?.layer,
+      }}
       geography={data.Slide.geography?.layer}
-      choroplethData={choroplethData}
     />
   );
 };

@@ -23,49 +23,49 @@ export async function getServerSideProps({ params, req }) {
     data: { data },
   } = await axios.post(`${req.protocol}://${req.get('Host')}/admin/api`, {
     query: `query GetFullProject($project: ID!) {
-        Project(where: { id: $project }) {
+      Project(where: { id: $project }) {
+        title
+        description
+        imageTitle
+        source
+        url
+        user {
+          name
+        } 
+        slides(sortBy: order_ASC) {
+          id
           title
           description
+          longitude
+          latitude
+          zoom
+          bearing
+          pitch
+          size
+          media
           imageTitle
-          source
           url
-          user {
-            name
+          source
+          annotations {
+            id
+            feature
           }
-          slides(sortBy: order_ASC) {
+          selectedFeature
+          indicator {
             id
             title
-            description
+            varname
             year
-            longitude
-            latitude
-            zoom
-            bearing
-            pitch
-            opacity
-            size
-            media
-            selectedFeature
-            imageTitle
-            url
             source
-            annotations {
-              id
-              feature
-            }
-            disabledLayers: layers {
-              id
-              layerId
-            }
-            basemap {
-              ssid
-              title
-              creator
-            }
+            url
+          }
+          geography {
+            id
+            layer
           }
         }
       }
-    `,
+    }`,
     variables: {
       project: params.project,
     },

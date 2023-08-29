@@ -1,6 +1,6 @@
 import React from 'react';
 import { useRouter } from 'next/router';
-import { useQuery, gql } from '@apollo/client';
+import { gql, useQuery } from '@apollo/client';
 import { getDataFromTree } from '@apollo/react-ssr';
 import withApollo from '../../providers/withApollo';
 
@@ -23,16 +23,13 @@ export const GET_PROJECT = gql`
         id
         title
         description
-        year
         longitude
         latitude
         zoom
         bearing
         pitch
-        opacity
         size
         media
-        selectedFeature
         imageTitle
         url
         source
@@ -40,14 +37,18 @@ export const GET_PROJECT = gql`
           id
           feature
         }
-        disabledLayers: layers {
+        selectedFeature
+        indicator {
           id
-          layerId
-        }
-        basemap {
-          ssid
           title
-          creator
+          varname
+          year
+          source
+          url
+        }
+        geography {
+          id
+          layer
         }
       }
     }

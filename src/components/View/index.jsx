@@ -14,12 +14,13 @@ import styles from './View.module.css';
 
 const View = ({ data }) => {
   const [viewport, setViewport] = useState({});
-  const [year, setYear] = useState(data.Project.slides[0].year);
   const [activeBasemap, setActiveBasemap] = useState(null);
   const [opacity, setOpacity] = useState(1);
   const [selectedFeature, setSelectedFeature] = useState(null);
   const [annotations, setAnnotations] = useState(null);
   const [disabledLayers, setDisabledLayers] = useState(null);
+  const [geography, setGeography] = useState(null);
+  const [indicator, setIndicator] = useState(null);
 
   const { author } = useLocale();
 
@@ -53,7 +54,6 @@ const View = ({ data }) => {
       <div style={{ height: '100vh', width: '100vw', position: 'fixed', top: 0 }}>
         <Atlas
           handler={() => null}
-          year={year}
           viewport={viewport}
           viewer
           activeBasemap={activeBasemap}
@@ -61,6 +61,8 @@ const View = ({ data }) => {
           selectedFeature={selectedFeature}
           annotations={annotations}
           disabledLayers={disabledLayers}
+          indicator={indicator}
+          geography={geography}
         />
       </div>
       <div>
@@ -89,7 +91,11 @@ const View = ({ data }) => {
               newViewport.transitionDuration = 'auto';
             }
             setViewport(newViewport);
-            setYear(step.data.year);
+            setGeography(step.data.geography?.layer);
+            setIndicator({
+              ...step.data.indicator,
+              geography: step.data.geography?.layer,
+            });
             setActiveBasemap(step.data.basemap);
             setOpacity(step.data.opacity);
             setSelectedFeature(step.data.selectedFeature);
