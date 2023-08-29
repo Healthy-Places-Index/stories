@@ -28,7 +28,6 @@ const Atlas = ({
   geography,
 }) => {
   const mapRef = useRef(null);
-  const choroplethLoaded = useRef(false);
 
   let drawProps = [];
   if (!viewer) [drawProps] = useDraw();
@@ -58,7 +57,6 @@ const Atlas = ({
           setChoroplethData(res.data);
         });
 
-    console.log(indicator);
     if (indicator) {
       fetchData();
     } else {
