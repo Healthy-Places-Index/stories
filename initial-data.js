@@ -126,7 +126,7 @@ const populateIndicators = async (keystone, context) => {
                 ...pick(indicator, 'varname', 'title', 'source', 'url'),
                 year,
                 geographies: {
-                  connect: allGeographies
+                  connect: (allGeographies ?? [])
                     .filter(g => indicator.geographies.includes(g.layer))
                     .map(g => pick(g, 'id')),
                 },
