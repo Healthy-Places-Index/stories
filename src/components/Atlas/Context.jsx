@@ -19,6 +19,13 @@ const GET_SLIDE_ATLAS = gql`
       bearing
       pitch
       selectedFeature
+      indicator {
+        varname
+        year
+      }
+      geography {
+        layer
+      }
       annotations {
         id
         feature
@@ -117,12 +124,14 @@ const AtlasContext = ({ slide }) => {
     <Atlas
       handler={onViewportChange}
       viewport={mapViewport}
-      year={data.Slide.year}
       disabledLayers={data.Slide.disabledLayers}
       activeBasemap={data.Slide.basemap}
       selectedFeature={data.Slide.selectedFeature}
       opacity={data.Slide.opacity}
       annotations={annotations}
+      indicator={data.Slide.indicator.varname}
+      year={data.Slide.indicator.year}
+      geography={data.Slide.geography.layer}
     />
   );
 };

@@ -23,7 +23,16 @@ const labelLayout = {
   'text-field': ['get', 'title'],
 };
 
-const Atlas = ({ handler, viewport, viewer, selectedFeature, annotations }) => {
+const Atlas = ({
+  handler,
+  viewport,
+  viewer,
+  selectedFeature,
+  annotations,
+  indicator,
+  geography,
+  year,
+}) => {
   const mapRef = useRef(null);
 
   let drawProps = [];
@@ -88,6 +97,24 @@ const Atlas = ({ handler, viewport, viewer, selectedFeature, annotations }) => {
     <ReactMapGL {...getMapProps()}>
       {drawProps.editing && <Editor {...drawProps} />}
       {!viewer && <Toolbar />}
+      {geography && (
+        <Source
+          key={geography}
+          type="vector"
+          tiles={[`${process.env.NEXT_PUBLIC_TILE_URL}${geography}/{z}/{x}/{y}.pbf`]}
+        >
+          <Layer
+            id="border"
+            type="line"
+            source-layer={geography}
+            paint={{
+              'line-width': ['interpolate', ['linear'], ['zoom'], 6, 0.1, 10, 1],
+              'line-opacity': ['interpolate', ['linear'], ['zoom'], 4, 0, 6, 1],
+              'line-color': '#666666',
+            }}
+          />
+        </Source>
+      )}
       {featureData && (
         <Source key={selectedFeature} type="geojson" data={featureData}>
           {featureData.geometry.type.match(/point/i) ? (
@@ -196,12 +223,18 @@ Atlas.propTypes = {
   viewer: PropTypes.bool,
   selectedFeature: PropTypes.string,
   annotations: PropTypes.shape(),
+  indicator: PropTypes.string,
+  geography: PropTypes.string,
+  year: PropTypes.number,
 };
 
 Atlas.defaultProps = {
   viewer: false,
   selectedFeature: null,
   annotations: null,
+  indicator: null,
+  geography: null,
+  year: null,
 };
 
 export default Atlas;
