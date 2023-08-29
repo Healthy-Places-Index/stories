@@ -2,7 +2,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import ReactMapGL, { Layer, LinearInterpolator, NavigationControl, Source } from 'react-map-gl';
-import { Icon } from 'semantic-ui-react';
+import { Card, Icon } from 'semantic-ui-react';
 import { Editor } from 'react-map-gl-draw';
 import axios from 'axios';
 
@@ -12,7 +12,7 @@ import Toolbar from '../Toolbar';
 
 import { maxZoom, minZoom } from '../../config/map';
 import styles from './Atlas.module.css';
-import { makeChoropleth } from './utils';
+import { hpi, makeChoropleth } from './utils';
 
 const labelLayout = {
   'text-font': ['Lato Regular'],
@@ -218,6 +218,24 @@ const Atlas = ({
             {locked ? <Icon name="lock" /> : <Icon name="lock open" />}
           </div>
         </div>
+      )}
+      {indicator && (
+        <Card raised className={styles.legend}>
+          <Card.Content>
+            <Card.Header>{indicator.title}</Card.Header>
+            <Card.Meta>Less → More healthy community conditions</Card.Meta>
+            <Card.Description style={{ paddingBottom: 5 }}>
+              {hpi.map((color, i) => (
+                <div key={color} className={styles.legendItem} style={{ backgroundColor: color }}>
+                  <div className={styles.legendLabel}>{(i * 25).toString()}</div>
+                </div>
+              ))}
+              <div className={styles.legendItem}>
+                <div className={styles.legendLabel}>100</div>
+              </div>
+            </Card.Description>
+          </Card.Content>
+        </Card>
       )}
     </ReactMapGL>
   );
