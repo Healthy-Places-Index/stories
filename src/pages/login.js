@@ -9,18 +9,12 @@ import {
   Image,
   Message,
 } from 'semantic-ui-react';
-import { useRouter } from 'next/router';
 import withApollo from '../providers/withApollo';
-import useLocale from '../hooks/useLocale';
 
 import Header from '../components/Header';
 import Head from '../components/Head';
 
 const Login = () => {
-  const { locale } = useRouter();
-  const { welcome, loginFull, email, password, loginError, verifyError, login, forgot } =
-    useLocale();
-
   const AUTH_MUTATION = gql`
     mutation signin($identity: String, $secret: String) {
       authenticate: authenticateUserWithPassword(email: $identity, password: $secret) {
@@ -42,7 +36,7 @@ const Login = () => {
     onCompleted: async ({ authenticate }) => {
       setReloading(true);
       if (!authenticate.item.verified) {
-        setError(loginError);
+        setError("You haven't verified your account yet. Please check your email.");
         setReloading(false);
       } else {
         await client.clearStore();
@@ -50,7 +44,7 @@ const Login = () => {
       }
     },
     onError: () => {
-      setError(verifyError);
+      setError('There was an error logging in. Please try again.');
     },
   });
 
@@ -71,16 +65,16 @@ const Login = () => {
       <Header />
       <Container text>
         <Heading as="h1" style={{ margin: '20% 0 50px' }}>
-          {welcome}
+          Welcome to Healthy Place Stories
         </Heading>
         <Segment loading={reloading}>
           <Heading as="h3" style={{ margin: '10px 0 30px' }}>
-            {loginFull}
+            Login to your Healthy Places Stories Account
           </Heading>
           <Form method="POST" onSubmit={onSubmit}>
             <Form.Input
               name="email"
-              label={email}
+              label="Email"
               type="email"
               value={identity}
               error={Boolean(error)}
@@ -88,17 +82,17 @@ const Login = () => {
             />
             <Form.Input
               name="password"
-              label={password}
+              label="Password"
               type="password"
               value={secret}
               error={Boolean(error)}
               onChange={e => setSecret(e.target.value)}
             />
-            <a href={`/${locale}/reset`} style={{ float: 'right', marginBottom: 15 }}>
-              {forgot}
+            <a href="/reset" style={{ float: 'right', marginBottom: 15 }}>
+              Forgot Password
             </a>
             <Button type="submit" fluid primary loading={loading}>
-              {login}
+              Login
             </Button>
             {error && <Message negative>{error}</Message>}
           </Form>

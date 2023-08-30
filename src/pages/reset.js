@@ -10,13 +10,11 @@ import {
   Message,
 } from 'semantic-ui-react';
 import withApollo from '../providers/withApollo';
-import useLocale from '../hooks/useLocale';
 
 import Header from '../components/Header';
 import Head from '../components/Head';
 
 const Reset = () => {
-  const { reset, resetInstructions, email: emailText, resetPassword, resetSuccess } = useLocale();
   const [email, setEmail] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -40,27 +38,27 @@ const Reset = () => {
       <Header />
       <Container text>
         <Heading as="h1" style={{ margin: '50px 0' }}>
-          {reset}
+          Reset your password
         </Heading>
         <Segment loading={loading}>
           <Heading as="h3" style={{ margin: '10px 0 30px' }}>
-            {resetInstructions}
+            Enter your email address below and we will send you a link to reset your password.
           </Heading>
           <Form method="POST" onSubmit={onSubmit}>
             <Form.Input
               required
               name="email"
-              label={emailText}
+              label="Email"
               type="email"
               value={email}
               error={error && !email ? 'Email is required' : null}
               onChange={e => setEmail(e.target.value)}
             />
             <Button type="submit" fluid primary loading={loading}>
-              {resetPassword}
+              Reset Password
             </Button>
             {error && <Message negative>{error}</Message>}
-            {success && <Message success>{resetSuccess}</Message>}
+            {success && <Message success>Password reset request has been received</Message>}
           </Form>
         </Segment>
         <Image src="img/hrc-logo.png" />

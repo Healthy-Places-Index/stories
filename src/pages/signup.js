@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useMutation, gql } from '@apollo/client';
-import { useRouter } from 'next/router';
 import {
   Header as Heading,
   Container,
@@ -11,27 +10,14 @@ import {
   Message,
 } from 'semantic-ui-react';
 import withApollo from '../providers/withApollo';
-import useLocale from '../hooks/useLocale';
 
 import Header from '../components/Header';
 import Head from '../components/Head';
 
 const ADD_USER = gql`
-  mutation AddUser(
-    $name: String
-    $email: String
-    $password: String
-    $institution: String
-    $language: UserLanguageType
-  ) {
+  mutation AddUser($name: String, $email: String, $password: String, $institution: String) {
     createUser(
-      data: {
-        name: $name
-        email: $email
-        password: $password
-        institution: $institution
-        language: $language
-      }
+      data: { name: $name, email: $email, password: $password, institution: $institution }
     ) {
       id
     }
@@ -39,21 +25,6 @@ const ADD_USER = gql`
 `;
 
 const Signup = () => {
-  const {
-    createAccount,
-    enterDetails,
-    name,
-    email,
-    password,
-    institution,
-    confirm,
-    createButton,
-    createSuccess,
-    createError,
-    fieldError,
-    language,
-  } = useLocale();
-  const { locale } = useRouter();
   const [data, setData] = useState({});
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
@@ -61,25 +32,19 @@ const Signup = () => {
   const [signUp, { loading }] = useMutation(ADD_USER, {
     variables: { ...data },
     onCompleted: () => {
-      setSuccess(createSuccess);
+      setSuccess("You've successfully created an account!");
     },
     onError: () => {
-      setError(createError);
+      setError('There was an error creating your account. Please try again.');
     },
   });
 
   const onSubmit = e => {
     e.preventDefault();
-    if (
-      data.name &&
-      data.email &&
-      data.password &&
-      data.password === data.confirm &&
-      data.language
-    ) {
+    if (data.name && data.email && data.password && data.password === data.confirm) {
       signUp();
     } else {
-      setError(fieldError);
+      setError('Please fill out all required fields');
     }
   };
 
@@ -89,22 +54,22 @@ const Signup = () => {
       <Header />
       <Container text>
         <Heading as="h1" style={{ margin: '50px 0' }}>
-          {createAccount}
+          Create an Account
         </Heading>
         {success && (
-          <Message success onDismiss={() => window.location.replace(`/${locale}`)}>
-            {success}
+          <Message success onDismiss={() => window.location.replace(`/`)}>
+            You have successfully created an account!
           </Message>
         )}
         <Segment loading={loading} disabled={success}>
           <Heading as="h3" style={{ margin: '10px 0 30px' }}>
-            {enterDetails}
+            Please fill out the form below to create an account.
           </Heading>
           <Form method="POST" onSubmit={onSubmit}>
             <Form.Input
               required
               name="name"
-              label={name}
+              label="Name"
               type="text"
               value={data.text}
               error={error && !data.name ? 'Name is required' : null}
@@ -113,7 +78,7 @@ const Signup = () => {
             <Form.Input
               required
               name="email"
-              label={email}
+              label="Email"
               type="email"
               value={data.email}
               error={error && !data.email ? 'Email is required' : null}
@@ -121,27 +86,16 @@ const Signup = () => {
             />
             <Form.Input
               name="institution"
-              label={institution}
+              label="Organization"
               type="text"
               value={data.institution}
               onChange={e => setData({ ...data, institution: e.target.value })}
-            />
-            <Form.Select
-              name="language"
-              label={language}
-              required
-              options={[
-                { key: 'en', value: 'en', text: 'English' },
-                { key: 'pt', value: 'pt', text: 'Portuguese' },
-              ]}
-              value={data.language}
-              onChange={(e, { value }) => setData({ ...data, language: value })}
             />
             <Form.Group widths="equal">
               <Form.Input
                 required
                 name="password"
-                label={password}
+                label="Password"
                 type="password"
                 value={data.password}
                 error={error && !data.password ? 'Password is required' : null}
@@ -150,7 +104,7 @@ const Signup = () => {
               <Form.Input
                 required
                 name="confirm"
-                label={confirm}
+                label="Confirm Password"
                 type="password"
                 value={data.confirm}
                 error={error && data.password !== data.confirm ? 'Passwords do not match' : null}
@@ -158,7 +112,7 @@ const Signup = () => {
               />
             </Form.Group>
             <Button type="submit" fluid primary loading={loading}>
-              {createButton}
+              Create Account
             </Button>
             {error && <Message negative>{error}</Message>}
           </Form>
