@@ -18,7 +18,7 @@ const debouncedMutation = ({ slide, timerRef, mutation, values, typename }) => {
           },
         },
       }),
-    500
+    200
   );
 };
 

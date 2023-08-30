@@ -63,17 +63,6 @@ const UPDATE_VIEWPORT = gql`
       zoom
       bearing
       pitch
-      selectedFeature
-      indicator {
-        title
-        varname
-        year
-        source
-        url
-      }
-      geography {
-        layer
-      }
     }
   }
 `;
