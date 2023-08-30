@@ -100,24 +100,6 @@ module.exports = {
         delete: access.userIsAdmin,
       },
     },
-    termsAccepted: {
-      type: Checkbox,
-      access: {
-        read: access.userIsAdminOrOwner,
-        update: access.userIsAdminOrOwner,
-        create: access.userIsAdminOrOwner,
-        delete: access.userIsAdminOrOwner,
-      },
-    },
-    privacyAccepted: {
-      type: Checkbox,
-      access: {
-        read: access.userIsAdminOrOwner,
-        update: access.userIsAdminOrOwner,
-        create: access.userIsAdminOrOwner,
-        delete: access.userIsAdminOrOwner,
-      },
-    },
     projects: {
       type: Relationship,
       ref: 'Project.user',
@@ -130,19 +112,19 @@ module.exports = {
       },
     },
   },
-  // hooks: {
-  //   afterChange: async ({ operation, updatedItem, context }) => {
-  //     if (operation === 'create') {
-  //       const {
-  //         req: { protocol, hostname },
-  //       } = context;
-  //       sendEmail({
-  //         to: updatedItem.email,
-  //         key: updatedItem.verifyId,
-  //         host: `${protocol}://${hostname}`,
-  //         lang: updatedItem.language,
-  //       });
-  //     }
-  //   },
-  // },
+  hooks: {
+    afterChange: async ({ operation, updatedItem, context }) => {
+      if (operation === 'create') {
+        const {
+          req: { protocol, hostname },
+        } = context;
+        sendEmail({
+          to: updatedItem.email,
+          key: updatedItem.verifyId,
+          host: `${protocol}://${hostname}`,
+          lang: updatedItem.language,
+        });
+      }
+    },
+  },
 };

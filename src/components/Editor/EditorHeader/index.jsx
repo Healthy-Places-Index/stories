@@ -3,22 +3,19 @@ import PropTypes from 'prop-types';
 import { useRouter } from 'next/router';
 import { Button } from 'semantic-ui-react';
 
-import useLocale from '../../../hooks/useLocale';
-
 import styles from './EditorHeader.module.css';
 
 const EditorHeader = ({ title, project }) => {
   const { locale } = useRouter();
-  const { myNarratives, launchPreview } = useLocale();
   return (
     <div className={styles.header}>
       <a className={styles.projectLink} href={`/${locale}/projects`}>
-        {myNarratives}
+        My Stories
       </a>
       <Button
         primary
         className={styles.headerButton}
-        content={launchPreview}
+        content="Launch Preview"
         icon="play"
         labelPosition="left"
         as="a"

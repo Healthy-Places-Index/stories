@@ -5,7 +5,6 @@ import { useQuery, useMutation, gql } from '@apollo/client';
 import { Button, List, Segment, Form, Input } from 'semantic-ui-react';
 
 import { useDraw } from '../../providers/DrawProvider';
-import useLocale from '../../hooks/useLocale';
 
 import styles from './DrawList.module.css';
 
@@ -46,7 +45,6 @@ const DrawList = ({ slide }) => {
   const [deleteAnnotation] = useMutation(DELETE_ANNOTATION);
   const [updateAnnotation] = useMutation(UPDATE_ANNOTATION_FEATURE);
   const updateTimer = useRef();
-  const { features: featuresText } = useLocale();
 
   useEffect(() => {
     if (data) {
@@ -58,7 +56,7 @@ const DrawList = ({ slide }) => {
   if (!features || features.length === 0) return null;
   return (
     <Form.Field>
-      <label>{featuresText}</label>
+      <label>Annotations</label>
       <Segment>
         <List divided verticalAlign="middle">
           {features.map(({ id, feature }, index) => {

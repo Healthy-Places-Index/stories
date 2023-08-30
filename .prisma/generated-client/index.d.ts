@@ -20,8 +20,6 @@ export type User = {
   resetId: string | null
   isAdmin: boolean | null
   password: string | null
-  termsAccepted: boolean | null
-  privacyAccepted: boolean | null
 }
 
 /**
@@ -873,8 +871,6 @@ export namespace Prisma {
     resetId: string | null
     isAdmin: boolean | null
     password: string | null
-    termsAccepted: boolean | null
-    privacyAccepted: boolean | null
   }
 
   export type UserMaxAggregateOutputType = {
@@ -887,8 +883,6 @@ export namespace Prisma {
     resetId: string | null
     isAdmin: boolean | null
     password: string | null
-    termsAccepted: boolean | null
-    privacyAccepted: boolean | null
   }
 
   export type UserCountAggregateOutputType = {
@@ -901,8 +895,6 @@ export namespace Prisma {
     resetId: number | null
     isAdmin: number | null
     password: number | null
-    termsAccepted: number | null
-    privacyAccepted: number | null
     _all: number
   }
 
@@ -925,8 +917,6 @@ export namespace Prisma {
     resetId?: true
     isAdmin?: true
     password?: true
-    termsAccepted?: true
-    privacyAccepted?: true
   }
 
   export type UserMaxAggregateInputType = {
@@ -939,8 +929,6 @@ export namespace Prisma {
     resetId?: true
     isAdmin?: true
     password?: true
-    termsAccepted?: true
-    privacyAccepted?: true
   }
 
   export type UserCountAggregateInputType = {
@@ -953,8 +941,6 @@ export namespace Prisma {
     resetId?: true
     isAdmin?: true
     password?: true
-    termsAccepted?: true
-    privacyAccepted?: true
     _all?: true
   }
 
@@ -1039,8 +1025,6 @@ export namespace Prisma {
     resetId?: boolean
     isAdmin?: boolean
     password?: boolean
-    termsAccepted?: boolean
-    privacyAccepted?: boolean
     projects?: boolean | ProjectFindManyArgs
   }
 
@@ -6672,9 +6656,7 @@ export namespace Prisma {
     verifyId: 'verifyId',
     resetId: 'resetId',
     isAdmin: 'isAdmin',
-    password: 'password',
-    termsAccepted: 'termsAccepted',
-    privacyAccepted: 'privacyAccepted'
+    password: 'password'
   };
 
   export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
@@ -6811,8 +6793,6 @@ export namespace Prisma {
     resetId?: StringNullableFilter | string | null
     isAdmin?: BoolNullableFilter | boolean | null
     password?: StringNullableFilter | string | null
-    termsAccepted?: BoolNullableFilter | boolean | null
-    privacyAccepted?: BoolNullableFilter | boolean | null
     projects?: ProjectListRelationFilter
   }
 
@@ -6826,8 +6806,6 @@ export namespace Prisma {
     resetId?: SortOrder
     isAdmin?: SortOrder
     password?: SortOrder
-    termsAccepted?: SortOrder
-    privacyAccepted?: SortOrder
   }
 
   export type UserWhereUniqueInput = {
@@ -7067,8 +7045,6 @@ export namespace Prisma {
     resetId?: string | null
     isAdmin?: boolean | null
     password?: string | null
-    termsAccepted?: boolean | null
-    privacyAccepted?: boolean | null
     projects?: ProjectCreateNestedManyWithoutUserInput
   }
 
@@ -7082,8 +7058,6 @@ export namespace Prisma {
     resetId?: string | null
     isAdmin?: boolean | null
     password?: string | null
-    termsAccepted?: boolean | null
-    privacyAccepted?: boolean | null
     projects?: ProjectUncheckedCreateNestedManyWithoutUserInput
   }
 
@@ -7096,8 +7070,6 @@ export namespace Prisma {
     resetId?: NullableStringFieldUpdateOperationsInput | string | null
     isAdmin?: NullableBoolFieldUpdateOperationsInput | boolean | null
     password?: NullableStringFieldUpdateOperationsInput | string | null
-    termsAccepted?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    privacyAccepted?: NullableBoolFieldUpdateOperationsInput | boolean | null
     projects?: ProjectUpdateManyWithoutUserInput
   }
 
@@ -7111,8 +7083,6 @@ export namespace Prisma {
     resetId?: NullableStringFieldUpdateOperationsInput | string | null
     isAdmin?: NullableBoolFieldUpdateOperationsInput | boolean | null
     password?: NullableStringFieldUpdateOperationsInput | string | null
-    termsAccepted?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    privacyAccepted?: NullableBoolFieldUpdateOperationsInput | boolean | null
     projects?: ProjectUncheckedUpdateManyWithoutUserInput
   }
 
@@ -7125,8 +7095,6 @@ export namespace Prisma {
     resetId?: NullableStringFieldUpdateOperationsInput | string | null
     isAdmin?: NullableBoolFieldUpdateOperationsInput | boolean | null
     password?: NullableStringFieldUpdateOperationsInput | string | null
-    termsAccepted?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    privacyAccepted?: NullableBoolFieldUpdateOperationsInput | boolean | null
   }
 
   export type UserUncheckedUpdateManyInput = {
@@ -7139,8 +7107,6 @@ export namespace Prisma {
     resetId?: NullableStringFieldUpdateOperationsInput | string | null
     isAdmin?: NullableBoolFieldUpdateOperationsInput | boolean | null
     password?: NullableStringFieldUpdateOperationsInput | string | null
-    termsAccepted?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    privacyAccepted?: NullableBoolFieldUpdateOperationsInput | boolean | null
   }
 
   export type SlideCreateInput = {
@@ -8714,8 +8680,6 @@ export namespace Prisma {
     resetId?: string | null
     isAdmin?: boolean | null
     password?: string | null
-    termsAccepted?: boolean | null
-    privacyAccepted?: boolean | null
   }
 
   export type UserUncheckedCreateWithoutProjectsInput = {
@@ -8728,8 +8692,6 @@ export namespace Prisma {
     resetId?: string | null
     isAdmin?: boolean | null
     password?: string | null
-    termsAccepted?: boolean | null
-    privacyAccepted?: boolean | null
   }
 
   export type UserCreateOrConnectWithoutprojectsInput = {
@@ -8815,8 +8777,6 @@ export namespace Prisma {
     resetId?: NullableStringFieldUpdateOperationsInput | string | null
     isAdmin?: NullableBoolFieldUpdateOperationsInput | boolean | null
     password?: NullableStringFieldUpdateOperationsInput | string | null
-    termsAccepted?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    privacyAccepted?: NullableBoolFieldUpdateOperationsInput | boolean | null
   }
 
   export type UserUncheckedUpdateWithoutProjectsInput = {
@@ -8829,8 +8789,6 @@ export namespace Prisma {
     resetId?: NullableStringFieldUpdateOperationsInput | string | null
     isAdmin?: NullableBoolFieldUpdateOperationsInput | boolean | null
     password?: NullableStringFieldUpdateOperationsInput | string | null
-    termsAccepted?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    privacyAccepted?: NullableBoolFieldUpdateOperationsInput | boolean | null
   }
 
   export type ProjectCreateWithoutTagsInput = {

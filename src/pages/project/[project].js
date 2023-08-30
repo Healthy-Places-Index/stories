@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import { gql, useMutation, useQuery } from '@apollo/client';
 import { map } from 'lodash';
 import ErrorPage from 'next/error';
-import { useRouter } from 'next/router';
 import {
   Button,
   Checkbox,
@@ -14,7 +13,6 @@ import {
   Dropdown,
   Form,
   Header as Heading,
-  Image as Img,
   Input,
   Loader,
 } from 'semantic-ui-react';
@@ -26,7 +24,6 @@ import Head from '../../components/Head';
 import Confirm from '../../components/Confirm';
 import Wysiwyg from '../../components/Wysiwyg';
 import useProjectAuth from '../../providers/useProjectAuth';
-import useLocale from '../../hooks/useLocale';
 
 export const GET_PROJECT = gql`
   query GetProject($project: ID!) {
@@ -132,27 +129,6 @@ export const Create = ({ user, project, statusCode }) => {
   const [published, setPublished] = useState(false);
   const [isLoading, setLoading] = useState(false);
 
-  const { locale } = useRouter();
-  const {
-    editNarrative,
-    submit,
-    myNarratives,
-    title: titleText,
-    description: descriptionText,
-    image,
-    tags: tagsText,
-    category: categoryText,
-    cancel,
-    save,
-    deleteProject: deleteProjectText,
-    deleteQuestion,
-    deleteConfirm,
-    categorySelect,
-    tagSelect,
-    categories,
-    loadingText,
-  } = useLocale();
-
   useEffect(() => {
     setTags(loading ? [] : map(data.Project.tags, 'id'));
     setCategory(loading ? null : data.Project.category);
@@ -184,7 +160,7 @@ export const Create = ({ user, project, statusCode }) => {
         category,
         published,
       },
-    }).then(() => window.location.replace(`/${locale}/projects`));
+    }).then(() => window.location.replace(`/projects`));
   };
 
   const removeProject = id => {
@@ -193,13 +169,13 @@ export const Create = ({ user, project, statusCode }) => {
       variables: {
         id,
       },
-    }).then(() => window.location.replace(`/${locale}/projects`));
+    }).then(() => window.location.replace(`/projects`));
   };
 
   if (loading)
     return (
       <Dimmer active>
-        <Loader size="huge">{loadingText}</Loader>
+        <Loader size="huge">Loading...</Loader>
       </Dimmer>
     );
   if (error) return <p>ERROR</p>;
@@ -208,9 +184,9 @@ export const Create = ({ user, project, statusCode }) => {
     <div style={{ backgroundColor: '#FAFAFA', minHeight: '100vh' }}>
       <Head title={data.Project.title} />
       <Header user={user} />
-      <Container style={{ marginTop: 30 }} text>
-        <Button content={myNarratives} icon="angle left" as="a" href={`/${locale}/projects`} />
-        <Heading as="h1">{editNarrative}</Heading>
+      <Container style={{ marginTop: 30, paddingBottom: 30 }} text>
+        <Button content="My Stories" icon="angle left" as="a" href="/projects" />
+        <Heading as="h1">Edit Story Metadata</Heading>
         <Form loading={isLoading}>
           <Form.Input
             readOnly
@@ -220,24 +196,20 @@ export const Create = ({ user, project, statusCode }) => {
           />
           <Form.Field>
             <Checkbox
-              label={submit}
+              label="Submit for publishing"
               checked={published}
               onChange={(e, { checked }) => setPublished(checked)}
             />
           </Form.Field>
           <Divider style={{ margin: '40px 0' }} />
           <Form.Field required>
-            <label>{titleText}</label>
+            <label>Title</label>
             <Input value={title} onChange={(e, { value }) => setTitle(value)} />
           </Form.Field>
-          <Wysiwyg
-            label={descriptionText}
-            value={description || ''}
-            onEditorChange={setDescription}
-          />
+          <Wysiwyg label="Description" value={description || ''} onEditorChange={setDescription} />
           {imageMeta && (
             <Form.Field>
-              <label>{image}</label>
+              <label>Image</label>
               <Image
                 image={imageMeta}
                 addHandler={() => {}}
@@ -246,10 +218,10 @@ export const Create = ({ user, project, statusCode }) => {
             </Form.Field>
           )}
           <Form.Field>
-            <label>{tagsText}</label>
+            <label>Tags</label>
             <Dropdown
               options={data.tags}
-              placeholder={tagSelect}
+              placeholder="Select tags"
               search
               multiple
               selection
@@ -267,9 +239,9 @@ export const Create = ({ user, project, statusCode }) => {
             />
           </Form.Field>
           <Form.Field>
-            <label>{categoryText}</label>
+            <label>Category</label>
             <Dropdown
-              placeholder={categorySelect}
+              placeholder="Select category"
               fluid
               selection
               value={category}
@@ -278,7 +250,7 @@ export const Create = ({ user, project, statusCode }) => {
                 { key: 'null', text: '', value: null },
                 ...data.categories.values.map(v => ({
                   ...v,
-                  text: categories(v.text),
+                  text: v.text,
                 })),
               ]}
             />
@@ -292,29 +264,28 @@ export const Create = ({ user, project, statusCode }) => {
             style={{ paddingLeft: 60, paddingRight: 60 }}
             disabled={isLoading}
           >
-            {save}
+            Save
           </Button>
           <Button
             size="big"
             floated="right"
-            href={`/${locale}/projects`}
+            href="/projects"
             style={{ marginRight: 20 }}
             disabled={isLoading}
           >
-            {cancel}
+            Cancel
           </Button>
           <div style={{ clear: 'left', margin: 100 }} />
         </Form>
         <Confirm
           disabled={isLoading}
           buttonIcon="trash"
-          buttonTitle={deleteProjectText}
+          buttonTitle="Delete Story"
           confirmHandler={() => removeProject(project)}
-          confirmTitle={deleteQuestion}
+          confirmTitle="Are you sure you want to delete this story?"
         >
-          <p>{deleteConfirm}</p>
+          <p>Confirm Delete</p>
         </Confirm>
-        <Img src="/img/hrc-logo.png" style={{ marginTop: 60 }} />
       </Container>
     </div>
   );

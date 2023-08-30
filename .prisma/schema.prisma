@@ -10,18 +10,16 @@ generator client {
 }
 
 model User {
-  id              Int       @id @default(autoincrement())
-  name            String?
-  email           String?   @unique
-  institution     String?
-  verified        Boolean?
-  verifyId        String?
-  resetId         String?
-  isAdmin         Boolean?
-  password        String?
-  termsAccepted   Boolean?
-  privacyAccepted Boolean?
-  projects        Project[] @relation("Projectuser")
+  id          Int       @id @default(autoincrement())
+  name        String?
+  email       String?   @unique
+  institution String?
+  verified    Boolean?
+  verifyId    String?
+  resetId     String?
+  isAdmin     Boolean?
+  password    String?
+  projects    Project[] @relation("Projectuser")
 }
 
 model Slide {

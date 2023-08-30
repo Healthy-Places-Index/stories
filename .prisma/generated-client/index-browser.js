@@ -79,9 +79,7 @@ exports.Prisma.UserScalarFieldEnum = makeEnum({
   verifyId: 'verifyId',
   resetId: 'resetId',
   isAdmin: 'isAdmin',
-  password: 'password',
-  termsAccepted: 'termsAccepted',
-  privacyAccepted: 'privacyAccepted'
+  password: 'password'
 });
 
 exports.Prisma.SlideScalarFieldEnum = makeEnum({

@@ -1,12 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useRouter } from 'next/router';
 import { useMutation, gql } from '@apollo/client';
 import Avatar from 'boring-avatars';
-import { Container, Image, Dropdown } from 'semantic-ui-react';
-import useLocale from '../../hooks/useLocale';
+import { Container, Image, Dropdown, Header as Heading } from 'semantic-ui-react';
 
 import styles from './Header.module.css';
+import { hpi } from '../Atlas/utils';
 
 const UNAUTH_MUTATION = gql`
   mutation {
@@ -92,8 +91,6 @@ const pages = [
 ];
 
 const Header = ({ user }) => {
-  const { locale } = useRouter();
-  const { myNarratives } = useLocale();
   const [signOut, { client }] = useMutation(UNAUTH_MUTATION, {
     onCompleted: async () => {
       // Ensure there's no old authenticated data hanging around
@@ -106,18 +103,10 @@ const Header = ({ user }) => {
     <div style={{ backgroundColor: 'white' }}>
       <Container>
         <div className={`${styles.header} ${styles.headerFlex}`}>
-          <Image src="/img/rio-logo.svg" style={{ width: 150 }} />
+          <Image src="/img/hpi-logo.png" style={{ width: 40, marginRight: 15 }} />
+          <span style={{ fontSize: 32 }}>Healthy Place Stories</span>
           <div className={styles.spacer} />
           <div className={styles.headerFlex}>
-            {pages.map(({ name, url, active, relative }) => (
-              <a
-                key={name}
-                className={`${styles.link} ${active ? styles.active : ''}`}
-                href={`${relative ? `/${locale}` : process.env.NEXT_PUBLIC_MAIN_SITE}${url}`}
-              >
-                {name[locale]}
-              </a>
-            ))}
             {user && user.verified && (
               <Dropdown
                 icon={null}
@@ -125,21 +114,11 @@ const Header = ({ user }) => {
                 style={{ marginTop: 5, marginLeft: 15 }}
                 trigger={
                   // eslint-disable-next-line react/jsx-wrap-multilines
-                  <Avatar
-                    size={35}
-                    name={user.name}
-                    variant="bauhaus"
-                    colors={['#3C558E', '#EAF0DB', '#6CB2F5', '#CDE1F5']}
-                  />
+                  <Avatar size={35} name={user.name} variant="beam" colors={hpi} />
                 }
               >
                 <Dropdown.Menu style={{ marginLeft: -40 }}>
-                  <Dropdown.Item text={myNarratives} as="a" href={`/${locale}/projects`} />
-                  <Dropdown.Item
-                    text={locale === 'pt' ? 'English Version' : 'Versão em Português'}
-                    as="a"
-                    href={`/${locale === 'pt' ? 'en' : 'pt'}/projects`}
-                  />
+                  <Dropdown.Item text="My Stories" as="a" href="/projects" />
                   <Dropdown.Item text="Logout" onClick={signOut} />
                 </Dropdown.Menu>
               </Dropdown>
@@ -152,7 +131,7 @@ const Header = ({ user }) => {
 };
 
 Header.propTypes = {
-  user: PropTypes.string,
+  user: PropTypes.shape(),
 };
 
 Header.defaultProps = {

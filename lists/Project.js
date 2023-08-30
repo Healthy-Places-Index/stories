@@ -29,7 +29,7 @@ module.exports = {
     },
     category: {
       type: Select,
-      options: ['History', 'Architecture', 'Literature', 'Urbanism', 'Archaelogy', 'Environment'],
+      options: ['Health', 'Communities', 'Equity', 'Justice', 'Demographics', 'Projects'],
       access,
     },
     imageTitle: {

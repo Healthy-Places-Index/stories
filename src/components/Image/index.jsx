@@ -4,13 +4,10 @@ import PropTypes from 'prop-types';
 import axios from 'axios';
 import { Segment, Image as Img, Form, Input, Button } from 'semantic-ui-react';
 
-import useLocale from '../../hooks/useLocale';
-
 import styles from './Image.module.css';
 
 const Image = ({ image, updateHandler }) => {
   const fileInputRef = useRef(null);
-  const { chooseFile, caption, imageCaption } = useLocale();
 
   const [isLoading, setIsLoading] = useState(false);
   const [urlError, setUrlError] = useState(false);
@@ -57,7 +54,7 @@ const Image = ({ image, updateHandler }) => {
       ) : (
         <>
           <Button
-            content={chooseFile}
+            content="Choose File"
             labelPosition="left"
             icon="file"
             onClick={() => fileInputRef.current.click()}
@@ -67,9 +64,9 @@ const Image = ({ image, updateHandler }) => {
         </>
       )}
       <Form.Field inline style={{ marginTop: 15 }} disabled={!image?.url}>
-        <label className={styles.inlineLabel}>{caption}</label>
+        <label className={styles.inlineLabel}>Caption</label>
         <Input
-          placeholder={imageCaption}
+          placeholder="Image caption"
           className={styles.inlineInput}
           value={imageMeta && image.url ? imageMeta.imageTitle || '' : ''}
           onChange={(e, { value }) => {
