@@ -106,16 +106,6 @@ const Atlas = ({
           type="vector"
           tiles={[`${process.env.NEXT_PUBLIC_TILE_URL}${geography}/{z}/{x}/{y}.pbf`]}
         >
-          <Layer
-            id="border"
-            type="line"
-            source-layer={geography}
-            paint={{
-              'line-width': ['interpolate', ['linear'], ['zoom'], 6, 0.1, 10, 1],
-              'line-opacity': ['interpolate', ['linear'], ['zoom'], 4, 0, 6, 1],
-              'line-color': '#666666',
-            }}
-          />
           {choroplethData && (
             <Layer
               id="choropleth"
@@ -125,6 +115,17 @@ const Atlas = ({
               paint={{ 'fill-color': makeChoropleth(choroplethData) }}
             />
           )}
+          <Layer
+            id="border"
+            type="line"
+            source-layer={geography}
+            beforeId="hillshade"
+            paint={{
+              'line-width': ['interpolate', ['linear'], ['zoom'], 6, 0.1, 10, 1],
+              'line-opacity': ['interpolate', ['linear'], ['zoom'], 4, 0, 6, 1],
+              'line-color': '#666666',
+            }}
+          />
         </Source>
       )}
       {featureData && (
