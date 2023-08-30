@@ -5,11 +5,8 @@ module.exports = class CheckAuthentication {
   prepareMiddleware() {
     const middleware = express();
     middleware.get([/projects/, /create/, /edit/, /duplicate/, /download/], (req, res, next) => {
-      let locale = req.path.split('/')[1];
-      locale = locale === 'pt' ? 'pt' : 'en';
-
       if (req.user && req.user.verified) return next();
-      return res.redirect(`/${locale}/login?redirect=${req.originalUrl}`);
+      return res.redirect(`/login?redirect=${req.originalUrl}`);
     });
 
     middleware.get(/login/, (req, res, next) => {
