@@ -1,5 +1,5 @@
 /* eslint-disable no-use-before-define */
-const { Text, Select, Relationship, Checkbox, Password } = require('@keystonejs/fields');
+const { Text, Relationship, Checkbox, Password } = require('@keystonejs/fields');
 const uuid = require('uuid').v4;
 
 const { sendEmail } = require('../server/email');

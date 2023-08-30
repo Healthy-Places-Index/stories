@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
-import { Container, Header as Heading, Icon, Image } from 'semantic-ui-react';
+import { Container, Header as Heading, Icon } from 'semantic-ui-react';
 import withApollo from '../providers/withApollo';
 
 import Header from '../components/Header';

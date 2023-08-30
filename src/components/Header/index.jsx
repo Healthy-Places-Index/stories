@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useMutation, gql } from '@apollo/client';
 import Avatar from 'boring-avatars';
-import { Container, Image, Dropdown, Header as Heading } from 'semantic-ui-react';
+import { Container, Image, Dropdown } from 'semantic-ui-react';
 
 import styles from './Header.module.css';
 import { hpi } from '../Atlas/utils';
@@ -14,81 +14,6 @@ const UNAUTH_MUTATION = gql`
     }
   }
 `;
-
-const pages = [
-  {
-    name: {
-      en: 'Home',
-      pt: 'Início',
-    },
-    url: '/',
-    active: false,
-    relative: false,
-  },
-  {
-    name: {
-      en: 'About',
-      pt: 'Sobre',
-    },
-    url: '/about',
-    active: false,
-    relative: false,
-  },
-  {
-    name: {
-      en: 'People',
-      pt: 'Equipe',
-    },
-    url: '/people',
-    active: false,
-    relative: false,
-  },
-  {
-    name: {
-      en: 'Research',
-      pt: 'Pesquisa',
-    },
-    url: '/research',
-    active: false,
-    relative: false,
-  },
-  {
-    name: {
-      en: 'Press',
-      pt: 'Imprensa',
-    },
-    url: '/press',
-    active: false,
-    relative: false,
-  },
-  {
-    name: {
-      en: 'Narratives',
-      pt: 'Narrativas',
-    },
-    url: '/',
-    active: true,
-    relative: true,
-  },
-  {
-    name: {
-      en: 'Iconography',
-      pt: 'Iconografia',
-    },
-    url: '/iconography',
-    active: false,
-    relative: false,
-  },
-  {
-    name: {
-      en: 'Map',
-      pt: 'Mapa',
-    },
-    url: '/map',
-    active: false,
-    relative: false,
-  },
-];
 
 const Header = ({ user }) => {
   const [signOut, { client }] = useMutation(UNAUTH_MUTATION, {
