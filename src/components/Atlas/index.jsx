@@ -191,7 +191,7 @@ const Atlas = ({
         </Source>
       )}
       {!viewer && (
-        <div style={{ position: 'absolute', left: 15, top: 100 }}>
+        <div style={{ position: 'absolute', left: 15, top: 60 }}>
           <NavigationControl showCompass={false} />
           <div
             className={`${styles.button} ${styles.button2D}`}

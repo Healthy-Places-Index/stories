@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { useQuery, useMutation, gql } from '@apollo/client';
+import { gql, useMutation, useQuery } from '@apollo/client';
 import { omit, uniqBy } from 'lodash';
-import { Dropdown, Segment } from 'semantic-ui-react';
+import { Form } from 'semantic-ui-react';
 
 import styles from './Chooser.module.css';
 
@@ -69,42 +69,64 @@ const Chooser = ({ slide }) => {
   const [geographies, setGeographies] = useState([]);
 
   const onIndicatorChange = (indicatorId, geographyId) => {
-    updateSlide({
-      variables: {
-        slide,
-        indicator: {
-          connect: { id: indicatorId },
-        },
-        geography: {
-          connect: { id: geographyId },
-        },
-      },
-      optimisticResponse: {
-        __typename: 'Mutation',
-        updateSlide: {
-          __typename: 'Slide',
-          id: slide,
+    if (indicatorId && geographyId) {
+      updateSlide({
+        variables: {
+          slide,
           indicator: {
-            __typename: 'Indicator',
-            id: indicatorId,
+            connect: { id: indicatorId },
           },
           geography: {
-            __typename: 'Geography',
-            id: geographyId,
+            connect: { id: geographyId },
           },
         },
-      },
-    });
+        optimisticResponse: {
+          __typename: 'Mutation',
+          updateSlide: {
+            __typename: 'Slide',
+            id: slide,
+            indicator: {
+              __typename: 'Indicator',
+              id: indicatorId,
+            },
+            geography: {
+              __typename: 'Geography',
+              id: geographyId,
+            },
+          },
+        },
+      });
+    } else {
+      updateSlide({
+        variables: {
+          slide,
+          indicator: {
+            disconnectAll: true,
+          },
+          geography: {
+            disconnectAll: true,
+          },
+        },
+        optimisticResponse: {
+          __typename: 'Mutation',
+          updateSlide: {
+            __typename: 'Slide',
+            id: slide,
+          },
+        },
+      });
+    }
   };
 
   useEffect(() => {
     if (allIndicators.data?.indicators) {
-      setIndicators(
-        uniqBy(allIndicators.data?.indicators, 'varname')
+      setIndicators([
+        { key: '', value: null, text: 'None' },
+        ...uniqBy(allIndicators.data?.indicators, 'varname')
           .map(i => ({
             key: i.id,
             value: i.id,
-            text: [i.title, i.year].join(' - '),
+            text: i.title,
             varname: i.varname,
           }))
           .sort((a, b) => a.text.localeCompare(b.text))
@@ -117,8 +139,8 @@ const Chooser = ({ slide }) => {
               };
             }
             return omit(i, 'varname');
-          })
-      );
+          }),
+      ]);
     }
   }, [allIndicators.data?.indicators, indicator]);
 
@@ -154,41 +176,38 @@ const Chooser = ({ slide }) => {
   }, [indicator]);
 
   useEffect(() => {
-    if (indicator && geography) {
-      onIndicatorChange(indicator.id, geography);
-    }
+    onIndicatorChange(indicator?.id, geography);
   }, [indicator, geography]);
 
   return (
-    <Segment className={styles.chooser}>
-      <Dropdown
-        fluid
-        search
-        selection
-        placeholder="Indicator"
-        options={indicators}
-        value={indicator?.id}
-        onChange={(e, { value }) =>
-          setIndicator(allIndicators.data?.indicators.find(i => i.id === value))
-        }
-      />
-      <Dropdown
-        fluid
-        selection
-        options={years}
-        value={indicator?.id}
-        onChange={(e, { value }) =>
-          setIndicator(allIndicators.data?.indicators.find(i => i.id === value))
-        }
-      />
-      <Dropdown
-        fluid
-        selection
-        options={geographies}
-        value={geography}
-        onChange={(e, { value }) => setGeography(value)}
-      />
-    </Segment>
+    <Form className={styles.chooser}>
+      <Form.Group widths="equal">
+        <Form.Select
+          search
+          selection
+          placeholder="Indicator"
+          options={indicators}
+          value={indicator?.id}
+          onChange={(e, { value }) =>
+            setIndicator(allIndicators.data?.indicators.find(i => i.id === value))
+          }
+        />
+        <Form.Select
+          selection
+          options={years}
+          value={indicator?.id}
+          onChange={(e, { value }) =>
+            setIndicator(allIndicators.data?.indicators.find(i => i.id === value))
+          }
+        />
+        <Form.Select
+          selection
+          options={geographies}
+          value={geography}
+          onChange={(e, { value }) => setGeography(value)}
+        />
+      </Form.Group>
+    </Form>
   );
 };
 

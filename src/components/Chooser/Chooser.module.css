@@ -1,5 +1,6 @@
 .chooser {
+    width: calc(100% - 30px);
     position: absolute !important;
-    top: 0;
+    top: 15px;
     right: 15px;
 }
