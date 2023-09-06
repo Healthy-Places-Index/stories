@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { gql, useMutation, useQuery } from '@apollo/client';
 import { Button, Container, Header as Heading, Icon, Image, Segment } from 'semantic-ui-react';
+import { v4 } from 'uuid';
 import withApollo from '../providers/withApollo';
 
 import Header from '../components/Header';
@@ -34,6 +35,7 @@ const CREATE_PROJECT = gql`
     $url: String
     $tags: TagRelateToManyInput
     $category: ProjectCategoryType
+    $uid: String
   ) {
     createProject(
       data: {
@@ -44,6 +46,7 @@ const CREATE_PROJECT = gql`
         imageTitle: $imageTitle
         source: $source
         url: $url
+        uid: $uid
       }
     ) {
       id
@@ -61,6 +64,7 @@ const Projects = ({ user }) => {
     createProject({
       variables: {
         title: 'New Story',
+        uid: v4(),
       },
     }).then(
       ({

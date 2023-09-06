@@ -67,6 +67,7 @@ export type Image = {
 
 export type Project = {
   id: number
+  uid: string | null
   title: string | null
   description: string | null
   category: string | null
@@ -3137,6 +3138,7 @@ export namespace Prisma {
 
   export type ProjectMinAggregateOutputType = {
     id: number
+    uid: string | null
     title: string | null
     description: string | null
     category: string | null
@@ -3154,6 +3156,7 @@ export namespace Prisma {
 
   export type ProjectMaxAggregateOutputType = {
     id: number
+    uid: string | null
     title: string | null
     description: string | null
     category: string | null
@@ -3171,6 +3174,7 @@ export namespace Prisma {
 
   export type ProjectCountAggregateOutputType = {
     id: number
+    uid: number | null
     title: number | null
     description: number | null
     category: number | null
@@ -3200,6 +3204,7 @@ export namespace Prisma {
 
   export type ProjectMinAggregateInputType = {
     id?: true
+    uid?: true
     title?: true
     description?: true
     category?: true
@@ -3217,6 +3222,7 @@ export namespace Prisma {
 
   export type ProjectMaxAggregateInputType = {
     id?: true
+    uid?: true
     title?: true
     description?: true
     category?: true
@@ -3234,6 +3240,7 @@ export namespace Prisma {
 
   export type ProjectCountAggregateInputType = {
     id?: true
+    uid?: true
     title?: true
     description?: true
     category?: true
@@ -3323,6 +3330,7 @@ export namespace Prisma {
 
   export type ProjectSelect = {
     id?: boolean
+    uid?: boolean
     title?: boolean
     description?: boolean
     category?: boolean
@@ -6701,6 +6709,7 @@ export namespace Prisma {
 
   export const ProjectScalarFieldEnum: {
     id: 'id',
+    uid: 'uid',
     title: 'title',
     description: 'description',
     category: 'category',
@@ -6904,6 +6913,7 @@ export namespace Prisma {
     OR?: Enumerable<ProjectWhereInput>
     NOT?: Enumerable<ProjectWhereInput>
     id?: IntFilter | number
+    uid?: StringNullableFilter | string | null
     title?: StringNullableFilter | string | null
     description?: StringNullableFilter | string | null
     category?: StringNullableFilter | string | null
@@ -6924,6 +6934,7 @@ export namespace Prisma {
 
   export type ProjectOrderByInput = {
     id?: SortOrder
+    uid?: SortOrder
     title?: SortOrder
     description?: SortOrder
     category?: SortOrder
@@ -6942,6 +6953,7 @@ export namespace Prisma {
 
   export type ProjectWhereUniqueInput = {
     id?: number
+    uid?: string
   }
 
   export type TagWhereInput = {
@@ -7294,6 +7306,7 @@ export namespace Prisma {
   }
 
   export type ProjectCreateInput = {
+    uid?: string | null
     title?: string | null
     description?: string | null
     category?: string | null
@@ -7313,6 +7326,7 @@ export namespace Prisma {
 
   export type ProjectUncheckedCreateInput = {
     id?: number
+    uid?: string | null
     title?: string | null
     description?: string | null
     category?: string | null
@@ -7330,6 +7344,7 @@ export namespace Prisma {
   }
 
   export type ProjectUpdateInput = {
+    uid?: NullableStringFieldUpdateOperationsInput | string | null
     title?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     category?: NullableStringFieldUpdateOperationsInput | string | null
@@ -7349,6 +7364,7 @@ export namespace Prisma {
 
   export type ProjectUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
+    uid?: NullableStringFieldUpdateOperationsInput | string | null
     title?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     category?: NullableStringFieldUpdateOperationsInput | string | null
@@ -7366,6 +7382,7 @@ export namespace Prisma {
   }
 
   export type ProjectUpdateManyMutationInput = {
+    uid?: NullableStringFieldUpdateOperationsInput | string | null
     title?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     category?: NullableStringFieldUpdateOperationsInput | string | null
@@ -7382,6 +7399,7 @@ export namespace Prisma {
 
   export type ProjectUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
+    uid?: NullableStringFieldUpdateOperationsInput | string | null
     title?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     category?: NullableStringFieldUpdateOperationsInput | string | null
@@ -8190,6 +8208,7 @@ export namespace Prisma {
   }
 
   export type ProjectCreateWithoutUserInput = {
+    uid?: string | null
     title?: string | null
     description?: string | null
     category?: string | null
@@ -8208,6 +8227,7 @@ export namespace Prisma {
 
   export type ProjectUncheckedCreateWithoutUserInput = {
     id?: number
+    uid?: string | null
     title?: string | null
     description?: string | null
     category?: string | null
@@ -8249,6 +8269,7 @@ export namespace Prisma {
     OR?: Enumerable<ProjectScalarWhereInput>
     NOT?: Enumerable<ProjectScalarWhereInput>
     id?: IntFilter | number
+    uid?: StringNullableFilter | string | null
     title?: StringNullableFilter | string | null
     description?: StringNullableFilter | string | null
     category?: StringNullableFilter | string | null
@@ -8331,6 +8352,7 @@ export namespace Prisma {
   }
 
   export type ProjectCreateWithoutSlidesInput = {
+    uid?: string | null
     title?: string | null
     description?: string | null
     category?: string | null
@@ -8349,6 +8371,7 @@ export namespace Prisma {
 
   export type ProjectUncheckedCreateWithoutSlidesInput = {
     id?: number
+    uid?: string | null
     title?: string | null
     description?: string | null
     category?: string | null
@@ -8455,6 +8478,7 @@ export namespace Prisma {
   }
 
   export type ProjectUpdateWithoutSlidesInput = {
+    uid?: NullableStringFieldUpdateOperationsInput | string | null
     title?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     category?: NullableStringFieldUpdateOperationsInput | string | null
@@ -8473,6 +8497,7 @@ export namespace Prisma {
 
   export type ProjectUncheckedUpdateWithoutSlidesInput = {
     id?: IntFieldUpdateOperationsInput | number
+    uid?: NullableStringFieldUpdateOperationsInput | string | null
     title?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     category?: NullableStringFieldUpdateOperationsInput | string | null
@@ -8792,6 +8817,7 @@ export namespace Prisma {
   }
 
   export type ProjectCreateWithoutTagsInput = {
+    uid?: string | null
     title?: string | null
     description?: string | null
     category?: string | null
@@ -8810,6 +8836,7 @@ export namespace Prisma {
 
   export type ProjectUncheckedCreateWithoutTagsInput = {
     id?: number
+    uid?: string | null
     title?: string | null
     description?: string | null
     category?: string | null
@@ -9173,6 +9200,7 @@ export namespace Prisma {
   }
 
   export type ProjectUpdateWithoutUserInput = {
+    uid?: NullableStringFieldUpdateOperationsInput | string | null
     title?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     category?: NullableStringFieldUpdateOperationsInput | string | null
@@ -9191,6 +9219,7 @@ export namespace Prisma {
 
   export type ProjectUncheckedUpdateWithoutUserInput = {
     id?: IntFieldUpdateOperationsInput | number
+    uid?: NullableStringFieldUpdateOperationsInput | string | null
     title?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     category?: NullableStringFieldUpdateOperationsInput | string | null
@@ -9208,6 +9237,7 @@ export namespace Prisma {
 
   export type ProjectUncheckedUpdateManyWithoutProjectsInput = {
     id?: IntFieldUpdateOperationsInput | number
+    uid?: NullableStringFieldUpdateOperationsInput | string | null
     title?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     category?: NullableStringFieldUpdateOperationsInput | string | null
@@ -9314,6 +9344,7 @@ export namespace Prisma {
   }
 
   export type ProjectUpdateWithoutTagsInput = {
+    uid?: NullableStringFieldUpdateOperationsInput | string | null
     title?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     category?: NullableStringFieldUpdateOperationsInput | string | null
@@ -9332,6 +9363,7 @@ export namespace Prisma {
 
   export type ProjectUncheckedUpdateWithoutTagsInput = {
     id?: IntFieldUpdateOperationsInput | number
+    uid?: NullableStringFieldUpdateOperationsInput | string | null
     title?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     category?: NullableStringFieldUpdateOperationsInput | string | null
@@ -9350,6 +9382,7 @@ export namespace Prisma {
 
   export type ProjectUncheckedUpdateManyWithoutFrom_Project_tagsInput = {
     id?: IntFieldUpdateOperationsInput | number
+    uid?: NullableStringFieldUpdateOperationsInput | string | null
     title?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     category?: NullableStringFieldUpdateOperationsInput | string | null

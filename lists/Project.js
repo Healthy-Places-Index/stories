@@ -12,6 +12,12 @@ const access = createDefaultAccess(defaultAuth);
 
 module.exports = {
   fields: {
+    uid: {
+      type: Text,
+      isUnique: true,
+      isRequired: true,
+      isReadOnly: true,
+    },
     title: {
       type: Text,
       isRequired: true,

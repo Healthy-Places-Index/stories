@@ -61,6 +61,7 @@ model Image {
 
 model Project {
   id               Int       @id @default(autoincrement())
+  uid              String?   @unique
   title            String?
   description      String?
   category         String?

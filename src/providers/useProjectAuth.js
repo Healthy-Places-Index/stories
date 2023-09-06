@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 export default async ({ req, project }) => {
+  if (!req.user) return 401;
   const {
     data: {
       data: {

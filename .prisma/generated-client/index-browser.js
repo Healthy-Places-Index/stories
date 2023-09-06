@@ -115,6 +115,7 @@ exports.Prisma.ImageScalarFieldEnum = makeEnum({
 
 exports.Prisma.ProjectScalarFieldEnum = makeEnum({
   id: 'id',
+  uid: 'uid',
   title: 'title',
   description: 'description',
   category: 'category',

@@ -29,6 +29,7 @@ export const GET_PROJECT = gql`
   query GetProject($project: ID!) {
     Project(where: { id: $project }) {
       id
+      uid
       title
       description
       tags {
@@ -192,7 +193,9 @@ export const Create = ({ user, project, statusCode }) => {
             readOnly
             label="URL"
             icon="linkify"
-            value={window.location.href.replace(/project/, 'view')}
+            value={window.location.href
+              .replace(/project/, 'view')
+              .replace(/(.*\/).*?$/, `$1${data.Project.uid}`)}
           />
           <Form.Field>
             <Checkbox

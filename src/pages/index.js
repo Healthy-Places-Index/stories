@@ -58,7 +58,7 @@ export async function getServerSideProps({ req }) {
   } = await axios.post(`${req.protocol}://${req.get('Host')}/admin/api`, {
     query: `query GetPublished {
         allProjects(where: { gallery: true }) {
-          id
+          id: uid
           title
           description
           category

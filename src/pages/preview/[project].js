@@ -1,11 +1,12 @@
 import React from 'react';
-import { useRouter } from 'next/router';
 import { gql, useQuery } from '@apollo/client';
-import { getDataFromTree } from '@apollo/react-ssr';
+import ErrorPage from 'next/error';
+import PropTypes from 'prop-types';
 import withApollo from '../../providers/withApollo';
 
 import View from '../../components/View';
 import Head from '../../components/Head';
+import useProjectAuth from '../../providers/useProjectAuth';
 
 export const GET_PROJECT = gql`
   query GetFullProject($project: ID!) {
@@ -54,9 +55,8 @@ export const GET_PROJECT = gql`
   }
 `;
 
-const Preview = () => {
-  const router = useRouter();
-  const { project } = router.query;
+const Preview = ({ project, statusCode }) => {
+  if (statusCode) return <ErrorPage statusCode={statusCode} />;
 
   const { loading, error, data } = useQuery(GET_PROJECT, {
     variables: { project },
@@ -74,4 +74,24 @@ const Preview = () => {
   );
 };
 
-export default withApollo(Preview, { getDataFromTree });
+export async function getServerSideProps({ req, params: { project } }) {
+  const statusCode = await useProjectAuth({ req, project });
+
+  return {
+    props: {
+      project,
+      statusCode,
+    },
+  };
+}
+
+Preview.propTypes = {
+  project: PropTypes.string.isRequired,
+  statusCode: PropTypes.number,
+};
+
+Preview.defaultProps = {
+  statusCode: null,
+};
+
+export default withApollo(Preview);

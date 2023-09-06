@@ -20,6 +20,27 @@ Preview.propTypes = {
 
 export async function getServerSideProps({ params, req }) {
   const {
+    data: {
+      data: { allProjects },
+    },
+  } = await axios.post(`${req.protocol}://${req.get('Host')}/admin/api`, {
+    query: `query GetProjectsByUid($uid: String){
+      allProjects(where: { uid: $uid }) {
+        id
+      }
+    }`,
+    variables: {
+      uid: params.project,
+    },
+  });
+
+  if (allProjects.length < 1) {
+    return {
+      notFound: true,
+    };
+  }
+
+  const {
     data: { data },
   } = await axios.post(`${req.protocol}://${req.get('Host')}/admin/api`, {
     query: `query GetFullProject($project: ID!) {
@@ -67,7 +88,7 @@ export async function getServerSideProps({ params, req }) {
       }
     }`,
     variables: {
-      project: params.project,
+      project: allProjects[0].id,
     },
   });
 
