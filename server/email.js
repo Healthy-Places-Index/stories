@@ -9,10 +9,10 @@ const templates = (template, { host, key }) => {
       return `<p>Click <a href="${host}/user/reset/${key}">here</a> to reset your password.</p>`;
     default:
       return `<p>
-        ${'Thank you for registering an account on '}<a href="http://narratives.imaginerio.org">imagineRio Narratives</a>.
+        ${'Thank you for registering an account on '}<a href="http://narratives.imaginerio.org">Healthy Places Stories</a>.
         ${'Please click the link below to verify your account.'}
       </p>
-      <p><a href="${host}/user/verify/${key}">${'Verify your email for imagineRio Narratives'}</a></p>`;
+      <p><a href="${host}/user/verify/${key}">${'Verify your email for Healthy Places Stories'}</a></p>`;
   }
 };
 
@@ -20,7 +20,7 @@ module.exports.sendEmail = ({ to, key, host, template }) => {
   sgMail
     .send({
       from: 'admin@stories.axismaps.io',
-      subject: 'Verify your email for imagineRio Narratives',
+      subject: 'Verify your email for Healthy Places Stories',
       to,
       html: templates(template, { host, key }),
     })
