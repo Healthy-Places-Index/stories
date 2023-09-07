@@ -1,4 +1,4 @@
-const { Text, Integer, Relationship, Url } = require('@keystonejs/fields');
+const { Text, Integer, Relationship, Url, Select } = require('@keystonejs/fields');
 
 module.exports = {
   fields: {
@@ -13,6 +13,10 @@ module.exports = {
     },
     year: {
       type: Integer,
+    },
+    group: {
+      type: Select,
+      options: ['hpi', 'support'],
     },
     geographies: {
       type: Relationship,

@@ -113,6 +113,7 @@ export type Indicator = {
   title: string | null
   domain: string | null
   year: number | null
+  group: string | null
   source: string | null
   url: string | null
 }
@@ -5283,6 +5284,7 @@ export namespace Prisma {
     title: string | null
     domain: string | null
     year: number | null
+    group: string | null
     source: string | null
     url: string | null
   }
@@ -5293,6 +5295,7 @@ export namespace Prisma {
     title: string | null
     domain: string | null
     year: number | null
+    group: string | null
     source: string | null
     url: string | null
   }
@@ -5303,6 +5306,7 @@ export namespace Prisma {
     title: number | null
     domain: number | null
     year: number | null
+    group: number | null
     source: number | null
     url: number | null
     _all: number
@@ -5325,6 +5329,7 @@ export namespace Prisma {
     title?: true
     domain?: true
     year?: true
+    group?: true
     source?: true
     url?: true
   }
@@ -5335,6 +5340,7 @@ export namespace Prisma {
     title?: true
     domain?: true
     year?: true
+    group?: true
     source?: true
     url?: true
   }
@@ -5345,6 +5351,7 @@ export namespace Prisma {
     title?: true
     domain?: true
     year?: true
+    group?: true
     source?: true
     url?: true
     _all?: true
@@ -5427,6 +5434,7 @@ export namespace Prisma {
     title?: boolean
     domain?: boolean
     year?: boolean
+    group?: boolean
     source?: boolean
     url?: boolean
     geographies?: boolean | GeographyFindManyArgs
@@ -6752,6 +6760,7 @@ export namespace Prisma {
     title: 'title',
     domain: 'domain',
     year: 'year',
+    group: 'group',
     source: 'source',
     url: 'url'
   };
@@ -7007,6 +7016,7 @@ export namespace Prisma {
     title?: StringNullableFilter | string | null
     domain?: StringNullableFilter | string | null
     year?: IntNullableFilter | number | null
+    group?: StringNullableFilter | string | null
     source?: StringNullableFilter | string | null
     url?: StringNullableFilter | string | null
     geographies?: GeographyListRelationFilter
@@ -7019,6 +7029,7 @@ export namespace Prisma {
     title?: SortOrder
     domain?: SortOrder
     year?: SortOrder
+    group?: SortOrder
     source?: SortOrder
     url?: SortOrder
   }
@@ -7494,6 +7505,7 @@ export namespace Prisma {
     title?: string | null
     domain?: string | null
     year?: number | null
+    group?: string | null
     source?: string | null
     url?: string | null
     geographies?: GeographyCreateNestedManyWithoutFrom_Indicator_geographiesInput
@@ -7506,6 +7518,7 @@ export namespace Prisma {
     title?: string | null
     domain?: string | null
     year?: number | null
+    group?: string | null
     source?: string | null
     url?: string | null
     from_Slide_indicator?: SlideUncheckedCreateNestedManyWithoutIndicatorInput
@@ -7516,6 +7529,7 @@ export namespace Prisma {
     title?: NullableStringFieldUpdateOperationsInput | string | null
     domain?: NullableStringFieldUpdateOperationsInput | string | null
     year?: NullableIntFieldUpdateOperationsInput | number | null
+    group?: NullableStringFieldUpdateOperationsInput | string | null
     source?: NullableStringFieldUpdateOperationsInput | string | null
     url?: NullableStringFieldUpdateOperationsInput | string | null
     geographies?: GeographyUpdateManyWithoutFrom_Indicator_geographiesInput
@@ -7528,6 +7542,7 @@ export namespace Prisma {
     title?: NullableStringFieldUpdateOperationsInput | string | null
     domain?: NullableStringFieldUpdateOperationsInput | string | null
     year?: NullableIntFieldUpdateOperationsInput | number | null
+    group?: NullableStringFieldUpdateOperationsInput | string | null
     source?: NullableStringFieldUpdateOperationsInput | string | null
     url?: NullableStringFieldUpdateOperationsInput | string | null
     from_Slide_indicator?: SlideUncheckedUpdateManyWithoutIndicatorInput
@@ -7538,6 +7553,7 @@ export namespace Prisma {
     title?: NullableStringFieldUpdateOperationsInput | string | null
     domain?: NullableStringFieldUpdateOperationsInput | string | null
     year?: NullableIntFieldUpdateOperationsInput | number | null
+    group?: NullableStringFieldUpdateOperationsInput | string | null
     source?: NullableStringFieldUpdateOperationsInput | string | null
     url?: NullableStringFieldUpdateOperationsInput | string | null
   }
@@ -7548,6 +7564,7 @@ export namespace Prisma {
     title?: NullableStringFieldUpdateOperationsInput | string | null
     domain?: NullableStringFieldUpdateOperationsInput | string | null
     year?: NullableIntFieldUpdateOperationsInput | number | null
+    group?: NullableStringFieldUpdateOperationsInput | string | null
     source?: NullableStringFieldUpdateOperationsInput | string | null
     url?: NullableStringFieldUpdateOperationsInput | string | null
   }
@@ -8290,6 +8307,7 @@ export namespace Prisma {
     title?: string | null
     domain?: string | null
     year?: number | null
+    group?: string | null
     source?: string | null
     url?: string | null
     geographies?: GeographyCreateNestedManyWithoutFrom_Indicator_geographiesInput
@@ -8301,6 +8319,7 @@ export namespace Prisma {
     title?: string | null
     domain?: string | null
     year?: number | null
+    group?: string | null
     source?: string | null
     url?: string | null
   }
@@ -8416,6 +8435,7 @@ export namespace Prisma {
     title?: NullableStringFieldUpdateOperationsInput | string | null
     domain?: NullableStringFieldUpdateOperationsInput | string | null
     year?: NullableIntFieldUpdateOperationsInput | number | null
+    group?: NullableStringFieldUpdateOperationsInput | string | null
     source?: NullableStringFieldUpdateOperationsInput | string | null
     url?: NullableStringFieldUpdateOperationsInput | string | null
     geographies?: GeographyUpdateManyWithoutFrom_Indicator_geographiesInput
@@ -8427,6 +8447,7 @@ export namespace Prisma {
     title?: NullableStringFieldUpdateOperationsInput | string | null
     domain?: NullableStringFieldUpdateOperationsInput | string | null
     year?: NullableIntFieldUpdateOperationsInput | number | null
+    group?: NullableStringFieldUpdateOperationsInput | string | null
     source?: NullableStringFieldUpdateOperationsInput | string | null
     url?: NullableStringFieldUpdateOperationsInput | string | null
   }
@@ -8879,6 +8900,7 @@ export namespace Prisma {
     title?: string | null
     domain?: string | null
     year?: number | null
+    group?: string | null
     source?: string | null
     url?: string | null
     from_Slide_indicator?: SlideCreateNestedManyWithoutIndicatorInput
@@ -8890,6 +8912,7 @@ export namespace Prisma {
     title?: string | null
     domain?: string | null
     year?: number | null
+    group?: string | null
     source?: string | null
     url?: string | null
     from_Slide_indicator?: SlideUncheckedCreateNestedManyWithoutIndicatorInput
@@ -8973,6 +8996,7 @@ export namespace Prisma {
     title?: StringNullableFilter | string | null
     domain?: StringNullableFilter | string | null
     year?: IntNullableFilter | number | null
+    group?: StringNullableFilter | string | null
     source?: StringNullableFilter | string | null
     url?: StringNullableFilter | string | null
   }
@@ -9403,6 +9427,7 @@ export namespace Prisma {
     title?: NullableStringFieldUpdateOperationsInput | string | null
     domain?: NullableStringFieldUpdateOperationsInput | string | null
     year?: NullableIntFieldUpdateOperationsInput | number | null
+    group?: NullableStringFieldUpdateOperationsInput | string | null
     source?: NullableStringFieldUpdateOperationsInput | string | null
     url?: NullableStringFieldUpdateOperationsInput | string | null
     from_Slide_indicator?: SlideUpdateManyWithoutIndicatorInput
@@ -9414,6 +9439,7 @@ export namespace Prisma {
     title?: NullableStringFieldUpdateOperationsInput | string | null
     domain?: NullableStringFieldUpdateOperationsInput | string | null
     year?: NullableIntFieldUpdateOperationsInput | number | null
+    group?: NullableStringFieldUpdateOperationsInput | string | null
     source?: NullableStringFieldUpdateOperationsInput | string | null
     url?: NullableStringFieldUpdateOperationsInput | string | null
     from_Slide_indicator?: SlideUncheckedUpdateManyWithoutIndicatorInput
@@ -9425,6 +9451,7 @@ export namespace Prisma {
     title?: NullableStringFieldUpdateOperationsInput | string | null
     domain?: NullableStringFieldUpdateOperationsInput | string | null
     year?: NullableIntFieldUpdateOperationsInput | number | null
+    group?: NullableStringFieldUpdateOperationsInput | string | null
     source?: NullableStringFieldUpdateOperationsInput | string | null
     url?: NullableStringFieldUpdateOperationsInput | string | null
   }

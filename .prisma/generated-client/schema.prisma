@@ -101,6 +101,7 @@ model Indicator {
   title                String?
   domain               String?
   year                 Int?
+  group                String?
   source               String?
   url                  String?
   geographies          Geography[] @relation("Indicator_geographies_many", references: [id])

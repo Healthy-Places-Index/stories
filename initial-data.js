@@ -81,9 +81,9 @@ const populateGeographies = async (keystone, context) => {
   );
 };
 
-const populateIndicators = async (keystone, context) => {
+const populateIndicators = async (keystone, context, group) => {
   const { data: indicators } = await axios.get(
-    `${process.env.NEXT_PUBLIC_API}indicators/hpi?key=${process.env.NEXT_PUBLIC_API_KEY}`
+    `${process.env.NEXT_PUBLIC_API}indicators/${group}?key=${process.env.NEXT_PUBLIC_API_KEY}`
   );
 
   const {
@@ -117,13 +117,14 @@ const populateIndicators = async (keystone, context) => {
           indicator.dates.map(year => {
             return keystone.executeGraphQL({
               context,
-              query: `mutation InitIndicator($varname: String, $title: String, $year: Int, $source: String, $url: String, $geographies: GeographyRelateToManyInput) {
-                createIndicator(data: { varname: $varname, title: $title, year: $year, source: $source, url: $url, geographies: $geographies }) {
+              query: `mutation InitIndicator($varname: String, $title: String, $group: String, $year: Int, $source: String, $url: String, $geographies: GeographyRelateToManyInput) {
+                createIndicator(data: { varname: $varname, title: $title, group: $group, year: $year, source: $source, url: $url, geographies: $geographies }) {
                   id
                 }
               }`,
               variables: {
                 ...pick(indicator, 'varname', 'title', 'source', 'url'),
+                group,
                 year,
                 geographies: {
                   connect: (allGeographies ?? [])
@@ -143,5 +144,6 @@ module.exports = async keystone => {
   const context = keystone.createContext({ skipAccessControl: true });
   await addInitialUser(keystone, context);
   await populateGeographies(keystone, context);
-  await populateIndicators(keystone, context);
+  await populateIndicators(keystone, context, 'hpi');
+  await populateIndicators(keystone, context, 'support');
 };
