@@ -22,7 +22,7 @@ const labelLayout = {
 const fetcher = indicator =>
   axios
     .get(
-      `${process.env.NEXT_PUBLIC_API}${indicator.group}?geography=${indicator.geography}&year=${indicator.year}&indicator=${indicator.varname}&format=json&key=${process.env.NEXT_PUBLIC_API_KEY}`
+      `${process.env.NEXT_PUBLIC_API}${indicator.group}?geography=${indicator.geography}&year=${indicator.year}&indicator=${indicator.varname}&format=slim&key=${process.env.NEXT_PUBLIC_API_KEY}`
     )
     .then(res => res.data);
 
