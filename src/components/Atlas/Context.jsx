@@ -21,6 +21,7 @@ const GET_SLIDE_ATLAS = gql`
         id
         title
         varname
+        group
         year
         source
         url

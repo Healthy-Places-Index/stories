@@ -42,6 +42,7 @@ export const GET_PROJECT = gql`
           id
           title
           varname
+          group
           year
           source
           url

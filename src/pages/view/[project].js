@@ -76,6 +76,7 @@ export async function getServerSideProps({ params, req }) {
             id
             title
             varname
+            group
             year
             source
             url
